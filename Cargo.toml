@@ -1,0 +1,9 @@
+[package]
+name = "game_of_live"
+version = "0.1.0"
+authors = ["Sven Strittmatter <sven.strittmatter@iteratec.de>"]
+
+[dependencies]
+
+[dev-dependencies]
+hamcrest = "0.1.5"

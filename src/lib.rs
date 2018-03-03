@@ -18,7 +18,7 @@ fn should_spawn(number_of_neighbours: u32) -> bool {
     number_of_neighbours == 3
 }
 
-#[derive(PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Status {
     iteration: u32,
     cells: u32,
@@ -39,11 +39,36 @@ impl Status {
             self.born,
             self.died)
     }
+
+    pub fn get_iteration(&self) -> u32 {
+        self.iteration
+    }
 }
 
 impl fmt::Display for Status {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.stringify())
+    }
+}
+
+#[derive(Debug, PartialEq)]
+pub struct Population {
+    status: Status,
+}
+
+impl Population {
+    pub fn new() -> Population {
+        Population { status: Status::new(0, 0, 0, 0) }
+    }
+
+    fn next_generation(&self) -> Population {
+        Population {
+            status: Status::new(self.status.get_iteration() + 1, 0, 0, 0)
+        }
+    }
+
+    pub fn get_status(&self) -> Status {
+        self.status.clone()
     }
 }
 
@@ -149,5 +174,22 @@ mod tests {
         assert_that!(
             status.stringify(),
             is(equal_to(String::from("Iteration: 42, Cells: 23, Born: 5, Died: 3"))));
+    }
+
+    #[test]
+    fn new_population_has_initial_status() {
+        let initial = Population::new();
+
+        assert_that!(initial.get_status(), is(equal_to(Status::new(0, 0, 0, 0))));
+    }
+
+    #[test]
+    fn generate_next_population() {
+        let initial = Population::new();
+
+        let next = initial.next_generation();
+
+        assert_that!(initial.get_status().get_iteration(), is(equal_to(0)));
+        assert_that!(next.get_status().get_iteration(), is(equal_to(1)));
     }
 }

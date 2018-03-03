@@ -47,6 +47,26 @@ mod tests {
     }
 
     #[test]
+    fn cell_must_die_if_five_neighbours() {
+        assert_that!(should_die(5), is(true));
+    }
+
+    #[test]
+    fn cell_must_die_if_six_neighbours() {
+        assert_that!(should_die(6), is(true));
+    }
+
+    #[test]
+    fn cell_must_die_if_seven_neighbours() {
+        assert_that!(should_die(7), is(true));
+    }
+
+    #[test]
+    fn cell_must_die_if_eight_neighbours() {
+        assert_that!(should_die(8), is(true));
+    }
+
+    #[test]
     fn should_not_spawn_new_cell_if_zero_neighbours() {
         assert_that!(should_spawn(0), is(false));
     }
@@ -79,5 +99,15 @@ mod tests {
     #[test]
     fn should_not_spawn_new_cell_if_six_neighbours() {
         assert_that!(should_spawn(6), is(false));
+    }
+
+    #[test]
+    fn should_not_spawn_new_cell_if_seven_neighbours() {
+        assert_that!(should_spawn(7), is(false));
+    }
+
+    #[test]
+    fn should_not_spawn_new_cell_if_eight_neighbours() {
+        assert_that!(should_spawn(8), is(false));
     }
 }

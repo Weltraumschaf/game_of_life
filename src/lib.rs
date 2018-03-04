@@ -20,18 +20,18 @@ fn should_spawn(number_of_neighbours: u32) -> bool {
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Status {
-    iteration: u32,
-    cells: u32,
-    born: u32,
-    died: u32,
+    iteration: usize,
+    cells: usize,
+    born: usize,
+    died: usize,
 }
 
 impl Status {
-    pub fn new(iteration: u32, cells: u32, born: u32, died: u32) -> Status {
+    pub fn new(iteration: usize, cells: usize, born: usize, died: usize) -> Status {
         Status { iteration, cells, born, died }
     }
 
-    pub fn stringify(&self) -> String {
+    fn stringify(&self) -> String {
         format!(
             "Iteration: {}, Cells: {}, Born: {}, Died: {}",
             self.iteration,
@@ -40,8 +40,12 @@ impl Status {
             self.died)
     }
 
-    pub fn get_iteration(&self) -> u32 {
+    fn get_iteration(&self) -> usize {
         self.iteration
+    }
+
+    fn get_cells(&self) -> usize {
+        self.cells
     }
 }
 
@@ -51,24 +55,92 @@ impl fmt::Display for Status {
     }
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Population {
-    status: Status,
+    iteration: usize,
+    width: usize,
+    height: usize,
+    cells: Vec<Cell>
 }
 
 impl Population {
-    pub fn new() -> Population {
-        Population { status: Status::new(0, 0, 0, 0) }
+    pub fn new(width: usize, height: usize, cells: Vec<Cell>) -> Population {
+        Population {
+            iteration: 0,
+            width,
+            height,
+            cells,
+        }
+    }
+
+    fn get_cells(&self) -> Vec<Cell> {
+        self.cells.clone()
     }
 
     fn next_generation(&self) -> Population {
         Population {
-            status: Status::new(self.status.get_iteration() + 1, 0, 0, 0)
+            iteration: self.iteration + 1,
+            width: self.width,
+            height: self.height,
+            cells: self.cells.clone(),
         }
     }
 
     pub fn get_status(&self) -> Status {
-        self.status.clone()
+        Status::new(self.iteration, self.cells.len(), 0, 0)
+    }
+
+    fn stringify(&self) -> String {
+        let mut buf = String::new();
+        buf.push_str(self.get_status().stringify().as_str());
+        buf.push('\n');
+
+        for y in 0..self.height {
+            for x in 0..self.width {
+                match self.get_cell(Place::new(x, y)) {
+                    Some(_) => buf.push('O'),
+                    None => buf.push(' '),
+                }
+            }
+
+            buf.push('\n');
+        }
+
+        buf
+    }
+
+    fn get_cell(&self, position: Place) -> Option<Cell> {
+        let mut it = self.get_cells().into_iter();
+        it.find(|cell| cell.position == position)
+    }
+}
+
+impl fmt::Display for Population {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.stringify())
+    }
+}
+
+#[derive(Debug, PartialEq, Clone)]
+pub struct Cell {
+    position: Place,
+}
+
+impl Cell {
+    pub fn new(position: Place) -> Cell {
+        Cell { position }
+    }
+}
+
+#[derive(Debug, PartialEq, Clone)]
+pub struct Place {
+    x: usize,
+    y: usize,
+}
+
+impl Place {
+    pub fn new(x: usize, y: usize) -> Place {
+        Place { x, y }
     }
 }
 
@@ -178,18 +250,90 @@ mod tests {
 
     #[test]
     fn new_population_has_initial_status() {
-        let initial = Population::new();
+        let initial = Population::new(5, 5, Vec::new());
 
         assert_that!(initial.get_status(), is(equal_to(Status::new(0, 0, 0, 0))));
     }
 
     #[test]
     fn generate_next_population() {
-        let initial = Population::new();
+        let initial = Population::new(5, 5, Vec::new());
 
         let next = initial.next_generation();
 
         assert_that!(initial.get_status().get_iteration(), is(equal_to(0)));
         assert_that!(next.get_status().get_iteration(), is(equal_to(1)));
+    }
+
+    #[test]
+    fn format_empty_population() {
+        let sut = Population::new(10, 5, Vec::new());
+        let expected = "Iteration: 0, Cells: 0, Born: 0, Died: 0\n          \n          \n          \n          \n          \n";
+
+        assert_that!(sut.stringify(), is(equal_to(String::from(expected))));
+    }
+
+    #[test]
+    fn format_some_population() {
+        let cells: Vec<Cell> = vec!(
+            Cell::new(Place::new(0, 0)),
+            Cell::new(Place::new(9, 0)),
+            Cell::new(Place::new(0, 1)),
+            Cell::new(Place::new(2, 1)),
+            Cell::new(Place::new(7, 1)),
+            Cell::new(Place::new(9, 1)),
+            Cell::new(Place::new(0, 2)),
+            Cell::new(Place::new(3, 2)),
+            Cell::new(Place::new(6, 2)),
+            Cell::new(Place::new(9, 2)),
+            Cell::new(Place::new(0, 3)),
+            Cell::new(Place::new(4, 3)),
+            Cell::new(Place::new(5, 3)),
+            Cell::new(Place::new(9, 3)),
+            Cell::new(Place::new(0, 4)),
+            Cell::new(Place::new(9, 4))
+        );
+        let sut = Population::new(10, 5, cells);
+        let expected = r#"Iteration: 0, Cells: 16, Born: 0, Died: 0
+O        O
+O O    O O
+O  O  O  O
+O   OO   O
+O        O
+"#;
+
+        assert_that!(sut.stringify(), is(equal_to(String::from(expected))));
+    }
+
+    #[test]
+    fn get_cell_not_found() {
+        let sut = Population::new(5, 5, Vec::new());
+
+        assert_that!(sut.get_cell(Place::new(1, 1)), is(equal_to(None)));
+    }
+
+    #[test]
+    fn get_cell_found() {
+        let sut = Population::new(
+            5,
+            5,
+            vec!(Cell::new(Place::new(1, 1))));
+
+        assert_that!(sut.get_cell(Place::new(1, 1)), is(equal_to(Some(Cell::new(Place::new(1, 1))))));
+    }
+
+    #[test]
+    fn get_number_of_cells_in_status() {
+        let cells: Vec<Cell> = vec!(
+            Cell::new(Place::new(0, 0)),
+            Cell::new(Place::new(9, 0)),
+            Cell::new(Place::new(0, 1)),
+            Cell::new(Place::new(2, 1)),
+            Cell::new(Place::new(7, 1))
+        );
+
+        let sut = Population::new(10, 5, cells);
+
+        assert_that!(sut.get_status().get_cells(), is(equal_to(5)));
     }
 }

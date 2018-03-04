@@ -14,11 +14,17 @@ fn main() {
     println!("{}", initial.get_status());
 }
 
+struct Cell {
+    position: Place,
+}
+
+struct Place {
+    x: u32,
+    y: u32,
+}
 
 #[cfg(test)]
 mod tests {
     use super::*;
     use hamcrest::prelude::*;
-
-
 }

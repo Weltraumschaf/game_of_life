@@ -256,14 +256,55 @@ mod tests {
     }
 
     #[test]
-    fn generate_next_population() {
+    fn generate_next_population_from_empty_population() {
         let initial = Population::new(5, 5, Vec::new());
 
         let next = initial.next_generation();
 
         assert_that!(initial.get_status().get_iteration(), is(equal_to(0)));
         assert_that!(next.get_status().get_iteration(), is(equal_to(1)));
+        assert_that!(next.get_status().get_cells(), is(equal_to(0)));
     }
+
+    #[test]
+    #[ignore]
+    fn generate_next_population_single_cell_must_die() {}
+
+    #[test]
+    #[ignore]
+    fn generate_next_population_cell_with_one_neighbour_must_die() {}
+
+    #[test]
+    #[ignore]
+    fn generate_next_population_cell_with_two_neighbours_survives() {}
+
+    #[test]
+    #[ignore]
+    fn generate_next_population_cell_with_three_neighbours_survive() {}
+
+    #[test]
+    #[ignore]
+    fn generate_next_population_cell_with_four_neighbours_must_die() {}
+
+    #[test]
+    #[ignore]
+    fn generate_next_population_cell_with_five_neighbours_must_die() {}
+
+    #[test]
+    #[ignore]
+    fn generate_next_population_cell_with_six_neighbours_must_die() {}
+
+    #[test]
+    #[ignore]
+    fn generate_next_population_cell_with_seven_neighbours_must_die() {}
+
+    #[test]
+    #[ignore]
+    fn generate_next_population_cell_with_eight_neighbours_must_die() {}
+
+    #[test]
+    #[ignore]
+    fn generate_next_population_new_cell_will_be_born_on_three_neighbours_at_empty_place() {}
 
     #[test]
     fn format_empty_population() {

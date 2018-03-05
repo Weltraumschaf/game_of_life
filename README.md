@@ -1,6 +1,6 @@
 # Game of Life
 
-[![Build Status](https://travis-ci.org/Weltraumschaf/game_of_live.svg?branch=master)](https://travis-ci.org/Weltraumschaf/game_of_live)
+[![Build Status](https://travis-ci.org/Weltraumschaf/game_of_life.svg?branch=master)](https://travis-ci.org/Weltraumschaf/game_of_life)
 
 Little project which implements [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
 

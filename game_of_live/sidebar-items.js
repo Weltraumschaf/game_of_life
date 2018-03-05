@@ -1,1 +1,1 @@
-initSidebarItems({});
+initSidebarItems({"struct":[["Cell",""],["Place",""],["Population",""],["Status",""]]});

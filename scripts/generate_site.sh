@@ -13,6 +13,8 @@ rustdoc --test README.md -L target
 
 tmp_dir=$(mktemp -d)
 
+echo "Use temp dir: ${tmp_dir}"
+
 pushd "${tmp_dir}"
 git clone --quiet git@github.com:Weltraumschaf/game_of_live.git site
 
@@ -27,7 +29,7 @@ git checkout master -- README.md
 
 git add -f .
 git commit -m "Auto doc upload from travis"
-git push -fq origin gh-pages > /dev/null
+git push -fq origin gh-pages
 
 popd
 popd

@@ -1,21 +1,9 @@
 use cell::Cell;
+use dimension::Dimension;
 use place::Place;
 use place::distance;
 use std::fmt;
 use status::Status;
-
-/// Describes the dimension of a population.
-#[derive(Debug, PartialEq, Clone)]
-struct Dimension {
-    width: usize,
-    height: usize,
-}
-
-impl fmt::Display for Dimension {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "({}x{})", self.width, self.height)
-    }
-}
 
 /// This struct describes a population of cells.
 #[derive(Debug, PartialEq, Clone)]
@@ -33,7 +21,7 @@ impl Population {
     pub fn new(width: usize, height: usize, cells: Vec<Cell>) -> Population {
         Population {
             status: Status::new(0, cells.len(), 0, 0),
-            size: Dimension { width, height },
+            size: Dimension::new(width, height),
             cells,
         }
     }
@@ -51,8 +39,8 @@ impl Population {
         let mut born = 0;
         let mut died = 0;
 
-        for y in 0..self.size.height {
-            for x in 0..self.size.width {
+        for y in 0..self.size.get_height() {
+            for x in 0..self.size.get_width() {
                 let current = Place::new(x, y);
                 let number_of_neighbours = count_neighbours(&self.cells, &current);
 
@@ -88,8 +76,8 @@ impl Population {
         buf.push_str(&format!("{}", self.get_status()));
         buf.push('\n');
 
-        for y in 0..self.size.height {
-            for x in 0..self.size.width {
+        for y in 0..self.size.get_height() {
+            for x in 0..self.size.get_width() {
                 let current = Place::new(x, y);
 
                 match self.get_cell(&current) {

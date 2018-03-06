@@ -67,6 +67,11 @@ mod tests {
     use hamcrest::prelude::*;
 
     #[test]
+    fn format_place() {
+        assert_that!(format!("{}", Place::new(23, 42)), is(equal_to(String::from("(23, 42)"))));
+    }
+
+    #[test]
     fn test_connection_vector_for_zero_points() {
         assert_that!(connection_vector(&Place::new(0, 0), &Place::new(0, 0)), is(equal_to((0, 0))));
     }

@@ -113,10 +113,6 @@
 <span id="67">67</span>
 <span id="68">68</span>
 <span id="69">69</span>
-<span id="70">70</span>
-<span id="71">71</span>
-<span id="72">72</span>
-<span id="73">73</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
@@ -159,20 +155,17 @@
         <span class="self">self</span>.<span class="ident">died</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">stringify</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
-        <span class="comment">// TODO move in format</span>
-        <span class="macro">format</span><span class="macro">!</span>(
+}
+
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Status</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(
+            <span class="ident">f</span>,
             <span class="string">&quot;Iteration: {}, Cells: {}, Born: {}, Died: {}&quot;</span>,
             <span class="self">self</span>.<span class="ident">iteration</span>,
             <span class="self">self</span>.<span class="ident">cells</span>,
             <span class="self">self</span>.<span class="ident">born</span>,
             <span class="self">self</span>.<span class="ident">died</span>)
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Status</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">stringify</span>())
     }
 }
 
@@ -186,10 +179,9 @@
         <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">Status</span>::<span class="ident">new</span>(<span class="number">42</span>, <span class="number">23</span>, <span class="number">5</span>, <span class="number">3</span>);
 
         <span class="macro">assert_that</span><span class="macro">!</span>(
-            <span class="ident">status</span>.<span class="ident">stringify</span>(),
+            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">status</span>),
             <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;Iteration: 42, Cells: 23, Born: 5, Died: 3&quot;</span>))));
     }
-
 }</pre>
 </section>
     <section id='search' class="content hidden"></section>

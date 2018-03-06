@@ -170,12 +170,33 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
-    fn generate_next_population_cell_with_one_neighbour_must_die() {}
+    fn generate_next_population_cell_with_one_neighbour_both_must_die() {
+        let cells: Vec<Cell> = vec![
+            Cell::new(Place::new(8, 4)),
+            Cell::new(Place::new(9, 4))
+        ];
+        let sut = Population::new(10, 5, cells);
+
+        let next = sut.next_generation().get_status();
+
+        assert_that!(next.get_cells(), is(equal_to(0)));
+        assert_that!(next.get_died(), is(equal_to(2)));
+    }
 
     #[test]
     #[ignore]
-    fn generate_next_population_cell_with_two_neighbours_survives() {}
+    fn generate_next_population_cell_with_two_neighbours_survives() {
+        let cells: Vec<Cell> = vec![
+            Cell::new(Place::new(8, 4)),
+            Cell::new(Place::new(9, 4)),
+            Cell::new(Place::new(10, 4))
+        ];
+        let sut = Population::new(10, 5, cells);
+
+        let next = sut.next_generation().get_status();
+        assert_that!(next.get_cells(), is(equal_to(1)));
+        assert_that!(next.get_died(), is(equal_to(2)));
+    }
 
     #[test]
     #[ignore]

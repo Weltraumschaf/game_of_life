@@ -39,20 +39,17 @@ impl Status {
         self.died
     }
 
-    fn stringify(&self) -> String {
-        // TODO move in format
-        format!(
+}
+
+impl fmt::Display for Status {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
             "Iteration: {}, Cells: {}, Born: {}, Died: {}",
             self.iteration,
             self.cells,
             self.born,
             self.died)
-    }
-}
-
-impl fmt::Display for Status {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.stringify())
     }
 }
 
@@ -66,8 +63,7 @@ mod tests {
         let status = Status::new(42, 23, 5, 3);
 
         assert_that!(
-            status.stringify(),
+            format!("{}", status),
             is(equal_to(String::from("Iteration: 42, Cells: 23, Born: 5, Died: 3"))));
     }
-
 }

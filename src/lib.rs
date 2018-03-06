@@ -55,7 +55,7 @@ fn count_neighbours(cells: &Vec<Cell>, position: &Place) -> usize {
     neighbours
 }
 
-/// This struct describes the status of a cell population.
+/// This struct describes the status of a population.
 #[derive(Debug, PartialEq, Clone)]
 pub struct Status {
     /// The iteration of in which the population was.
@@ -105,6 +105,7 @@ impl fmt::Display for Status {
     }
 }
 
+/// This struct describes a population of cells.
 #[derive(Debug, PartialEq, Clone)]
 pub struct Population {
     iteration: usize,
@@ -185,6 +186,7 @@ impl fmt::Display for Population {
     }
 }
 
+/// This struct represents a living cell.
 #[derive(Debug, PartialEq, Clone)]
 pub struct Cell {
     position: Place,
@@ -200,9 +202,12 @@ impl Cell {
     }
 }
 
+/// This struct represents a place.
 #[derive(Debug, PartialEq, Clone)]
 pub struct Place {
+    /// X-axis position of place beginning a zero.
     x: usize,
+    /// Y-axis position of place beginning a zero.
     y: usize,
 }
 

@@ -40,6 +40,21 @@ fn distance(a: &Place, b: &Place) -> f64 {
     (powered_sum as f64).sqrt()
 }
 
+/// This function counts the number of neighbours (living cells) for a given place.
+fn count_neighbours(cells: &Vec<Cell>, position: &Place) -> usize {
+    let mut neighbours = 0;
+
+    for cell in cells {
+        let distance = distance(cell.get_position(), position);
+
+        if distance > 0.0 && distance < 2.0 {
+            neighbours += 1;
+        }
+    }
+
+    neighbours
+}
+
 /// This struct describes the status of a cell population.
 #[derive(Debug, PartialEq, Clone)]
 pub struct Status {
@@ -372,23 +387,29 @@ mod tests {
         assert_that!(distance(&Place::new(5, 5), &Place::new(7, 7)), is(close_to(2.8284, 0.0001)));
     }
 
-    /// This function counts the number of neighbours (living cells) for a given place.
-    fn count_neighbours(cells: &Vec<Cell>, position: &Place) -> usize {
-        let mut neighbours = 0;
+    #[test]
+    fn count_neighbours_surrounded_by_zero_neighbours() {
+        let cells = vec![
+            Cell::new(Place::new(5, 3)),
+            Cell::new(Place::new(5, 5)),
+            Cell::new(Place::new(6, 7))
+        ];
 
-        for cell in cells {
-            let distance = distance(cell.get_position(), position);
-
-            if distance <= 1.0 {
-                neighbours += 1;
-            }
-        }
-
-        neighbours
+        assert_that!(count_neighbours(&cells, &Place::new(5, 5)), is(equal_to(0)));
     }
 
     #[test]
-    #[ignore]
+    fn count_neighbours_surrounded_by_two_neighbours() {
+        let cells = vec![
+            Cell::new(Place::new(5, 4)),
+            Cell::new(Place::new(5, 5)),
+            Cell::new(Place::new(6, 6))
+        ];
+
+        assert_that!(count_neighbours(&cells, &Place::new(5, 5)), is(equal_to(2)));
+    }
+
+    #[test]
     fn count_neighbours_surrounded_by_eight_neighbours() {
         // (4,4) (5,4) (6,4)
         // (4,5) [5,5] (6,5)
@@ -398,11 +419,13 @@ mod tests {
             Cell::new(Place::new(5, 4)),
             Cell::new(Place::new(6, 4)),
             Cell::new(Place::new(4, 5)),
+            Cell::new(Place::new(5, 5)),
             Cell::new(Place::new(6, 5)),
             Cell::new(Place::new(4, 6)),
             Cell::new(Place::new(5, 6)),
             Cell::new(Place::new(6, 6))
         ];
+
         assert_that!(count_neighbours(&cells, &Place::new(5, 5)), is(equal_to(8)));
     }
 

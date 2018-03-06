@@ -75,6 +75,13 @@ impl Population {
         let mut it = self.get_cells().into_iter();
         it.find(|cell| cell.get_position() == position)
     }
+
+    fn has_cell(&self, position: &Place) -> bool {
+        match self.get_cell(position) {
+            Some(_) => true,
+            None => false,
+        }
+    }
 }
 
 impl fmt::Display for Population {
@@ -277,6 +284,23 @@ O        O
             vec![Cell::new(Place::new(1, 1))]);
 
         assert_that!(sut.get_cell(&Place::new(1, 1)), is(equal_to(Some(Cell::new(Place::new(1, 1))))));
+    }
+
+    #[test]
+    fn has_cell_not_found() {
+        let sut = Population::new(5, 5, Vec::new());
+
+        assert_that!(sut.has_cell(&Place::new(1, 1)), is(equal_to(false)));
+    }
+
+    #[test]
+    fn has_cell_found() {
+        let sut = Population::new(
+            5,
+            5,
+            vec![Cell::new(Place::new(1, 1))]);
+
+        assert_that!(sut.has_cell(&Place::new(1, 1)), is(equal_to(true)));
     }
 
     #[test]

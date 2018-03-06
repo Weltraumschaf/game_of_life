@@ -71,7 +71,14 @@ impl Population {
         }
     }
 
-    fn stringify(&self) -> String {
+    fn get_cell(&self, position: &Place) -> Option<Cell> {
+        let mut it = self.get_cells().into_iter();
+        it.find(|cell| cell.get_position() == position)
+    }
+}
+
+impl fmt::Display for Population {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut buf = String::new();
         buf.push_str(&format!("{}", self.get_status()));
         buf.push('\n');
@@ -89,18 +96,7 @@ impl Population {
             buf.push('\n');
         }
 
-        buf
-    }
-
-    fn get_cell(&self, position: &Place) -> Option<Cell> {
-        let mut it = self.get_cells().into_iter();
-        it.find(|cell| cell.get_position() == position)
-    }
-}
-
-impl fmt::Display for Population {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.stringify())
+        write!(f, "{}", buf)
     }
 }
 
@@ -231,7 +227,7 @@ mod tests {
         let sut = Population::new(10, 5, Vec::new());
         let expected = "Iteration: 0, Cells: 0, Born: 0, Died: 0\n          \n          \n          \n          \n          \n";
 
-        assert_that!(sut.stringify(), is(equal_to(String::from(expected))));
+        assert_that!(format!("{}", sut), is(equal_to(String::from(expected))));
     }
 
     #[test]
@@ -263,7 +259,7 @@ O   OO   O
 O        O
 "#;
 
-        assert_that!(sut.stringify(), is(equal_to(String::from(expected))));
+        assert_that!(format!("{}", sut), is(equal_to(String::from(expected))));
     }
 
     #[test]

@@ -4,15 +4,28 @@ use place::distance;
 use std::fmt;
 use status::Status;
 
+/// Describes the dimension of a population.
+#[derive(Debug, PartialEq, Clone)]
+struct Dimension {
+    width: usize,
+    height: usize,
+}
+
+impl fmt::Display for Dimension {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "({}x{})", self.width, self.height)
+    }
+}
+
 /// This struct describes a population of cells.
 #[derive(Debug, PartialEq, Clone)]
 pub struct Population {
     /// The status of this population.
     status: Status,
-    width: usize, // TODO move into size type
-    height: usize, // TODO move into size type
+    /// The dimension of the population.
+    size: Dimension,
     /// The living cells of this population.
-    cells: Vec<Cell>
+    cells: Vec<Cell>,
 }
 
 impl Population {
@@ -20,8 +33,7 @@ impl Population {
     pub fn new(width: usize, height: usize, cells: Vec<Cell>) -> Population {
         Population {
             status: Status::new(0, cells.len(), 0, 0),
-            width,
-            height,
+            size: Dimension { width, height },
             cells,
         }
     }
@@ -39,8 +51,8 @@ impl Population {
         let mut born = 0;
         let mut died = 0;
 
-        for y in 0..self.height {
-            for x in 0..self.width {
+        for y in 0..self.size.height {
+            for x in 0..self.size.width {
                 let current = Place::new(x, y);
                 let number_of_neighbours = count_neighbours(&self.cells, &current);
 
@@ -66,8 +78,7 @@ impl Population {
 
         Population {
             status: Status::new(iteration, survived.len(), born, died),
-            width: self.width,
-            height: self.height,
+            size: self.size.clone(),
             cells: survived,
         }
     }
@@ -77,8 +88,8 @@ impl Population {
         buf.push_str(&format!("{}", self.get_status()));
         buf.push('\n');
 
-        for y in 0..self.height {
-            for x in 0..self.width {
+        for y in 0..self.size.height {
+            for x in 0..self.size.width {
                 let current = Place::new(x, y);
 
                 match self.get_cell(&current) {
@@ -414,5 +425,4 @@ O        O
 
         assert_that!(count_neighbours(&cells, &Place::new(5, 5)), is(equal_to(8)));
     }
-
 }

@@ -5,7 +5,7 @@ extern crate hamcrest;
 use std::fmt;
 
 /// A cell should die if it has less than two or more than three neighbours.
-fn should_die(number_of_neighbours: u32) -> bool {
+fn should_die(number_of_neighbours: usize) -> bool {
     match number_of_neighbours {
         2 | 3 => false,
         _ => true,
@@ -14,7 +14,7 @@ fn should_die(number_of_neighbours: u32) -> bool {
 
 /// At an empty place a new cell should spawn, if this cell has exactly three living cells as
 /// neighbour.
-fn should_spawn(number_of_neighbours: u32) -> bool {
+fn should_spawn(number_of_neighbours: usize) -> bool {
     number_of_neighbours == 3
 }
 
@@ -108,7 +108,7 @@ impl fmt::Display for Status {
 /// This struct describes a population of cells.
 #[derive(Debug, PartialEq, Clone)]
 pub struct Population {
-    iteration: usize,
+    status: Status,
     width: usize,
     height: usize,
     cells: Vec<Cell>
@@ -117,11 +117,15 @@ pub struct Population {
 impl Population {
     pub fn new(width: usize, height: usize, cells: Vec<Cell>) -> Population {
         Population {
-            iteration: 0,
+            status: Status::new(0, cells.len(), 0, 0),
             width,
             height,
             cells,
         }
+    }
+
+    fn get_status(&self) -> Status {
+        self.status.clone()
     }
 
     fn get_cells(&self) -> Vec<Cell> {
@@ -129,28 +133,41 @@ impl Population {
     }
 
     fn next_generation(&self) -> Population {
+        let mut survived: Vec<Cell> = Vec::new();
+        let mut born = 0;
+        let mut died = 0;
+
         for y in 0..self.height {
             for x in 0..self.width {
                 let current = Place::new(x, y);
-                let number_of_neighbours = 0;//count_neighbours(&self.cells, &current);
+                let number_of_neighbours = count_neighbours(&self.cells, &current);
 
                 match self.get_cell(&current) {
-                    Some(_) => {},
-                    None => {},
+                    Some(cell) => {
+                        if should_die(number_of_neighbours) {
+                            died += 1;
+                        } else {
+                            survived.push(cell);
+                        }
+                    },
+                    None => {
+                        if should_spawn(number_of_neighbours) {
+                            born += 1;
+                            survived.push(Cell::new(current));
+                        }
+                    },
                 }
             }
         }
 
+        let iteration = self.get_status().get_iteration() + 1;
+
         Population {
-            iteration: self.iteration + 1,
+            status: Status::new(iteration, survived.len(), born, died),
             width: self.width,
             height: self.height,
-            cells: self.cells.clone(),
+            cells: survived,
         }
-    }
-
-    pub fn get_status(&self) -> Status {
-        Status::new(self.iteration, self.cells.len(), 0, 0)
     }
 
     fn stringify(&self) -> String {
@@ -462,7 +479,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn generate_next_population_single_cell_must_die() {
         let cells: Vec<Cell> = vec![
             Cell::new(Place::new(9, 4))

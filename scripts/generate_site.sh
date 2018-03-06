@@ -7,7 +7,7 @@ echo "Publishing documentation ..."
 
 cargo clean
 cargo build
-#cargo test
+cargo test
 cargo doc --no-deps
 rustdoc --test README.md -L target
 

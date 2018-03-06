@@ -179,6 +179,11 @@
 <span id="133">133</span>
 <span id="134">134</span>
 <span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
@@ -247,6 +252,11 @@
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
     <span class="kw">use</span> <span class="ident">hamcrest</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">format_place</span>() {
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">23</span>, <span class="number">42</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;(23, 42)&quot;</span>))));
+    }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_connection_vector_for_zero_points</span>() {

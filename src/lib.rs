@@ -2,7 +2,10 @@
 #[macro_use]
 extern crate hamcrest;
 
+mod status;
+
 use std::fmt;
+use status::Status;
 
 /// A cell should die if it has less than two or more than three neighbours.
 fn should_die(number_of_neighbours: usize) -> bool {
@@ -53,56 +56,6 @@ fn count_neighbours(cells: &Vec<Cell>, position: &Place) -> usize {
     }
 
     neighbours
-}
-
-/// This struct describes the status of a population.
-#[derive(Debug, PartialEq, Clone)]
-pub struct Status {
-    /// The iteration of in which the population was.
-    iteration: usize,
-    /// Number of cells the population has.
-    cells: usize,
-    /// How many cells were born in comparison to the previous iteration.
-    born: usize,
-    /// How many cells were died in comparison to the previous iteration.
-    died: usize,
-}
-
-impl Status {
-    pub fn new(iteration: usize, cells: usize, born: usize, died: usize) -> Status {
-        Status { iteration, cells, born, died }
-    }
-
-    fn stringify(&self) -> String {
-        format!(
-            "Iteration: {}, Cells: {}, Born: {}, Died: {}",
-            self.iteration,
-            self.cells,
-            self.born,
-            self.died)
-    }
-
-    fn get_iteration(&self) -> usize {
-        self.iteration
-    }
-
-    fn get_cells(&self) -> usize {
-        self.cells
-    }
-
-    fn get_born(&self) -> usize {
-        self.born
-    }
-
-    fn get_died(&self) -> usize {
-        self.died
-    }
-}
-
-impl fmt::Display for Status {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.stringify())
-    }
 }
 
 /// This struct describes a population of cells.
@@ -172,7 +125,7 @@ impl Population {
 
     fn stringify(&self) -> String {
         let mut buf = String::new();
-        buf.push_str(self.get_status().stringify().as_str());
+        buf.push_str(&format!("{}", self.get_status()));
         buf.push('\n');
 
         for y in 0..self.height {
@@ -449,15 +402,6 @@ mod tests {
         ];
 
         assert_that!(count_neighbours(&cells, &Place::new(5, 5)), is(equal_to(8)));
-    }
-
-    #[test]
-    fn format_game_status() {
-        let status = Status::new(42, 23, 5, 3);
-
-        assert_that!(
-            status.stringify(),
-            is(equal_to(String::from("Iteration: 42, Cells: 23, Born: 5, Died: 3"))));
     }
 
     #[test]

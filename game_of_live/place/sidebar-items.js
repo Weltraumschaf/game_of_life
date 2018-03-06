@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["distance","This function calculates the distance of two places."]],"struct":[["Place","This struct represents a place."]]});

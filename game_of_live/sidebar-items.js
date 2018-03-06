@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Cell",""],["Place",""],["Population",""],["Status","This struct describes the status of a cell population."]]});
+initSidebarItems({"mod":[["cell",""],["place",""],["population",""]]});

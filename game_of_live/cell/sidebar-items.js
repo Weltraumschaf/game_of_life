@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Cell","This struct represents a living cell."]]});

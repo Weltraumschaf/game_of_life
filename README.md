@@ -4,6 +4,8 @@
 
 Little project which implements [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
 
+The API doc of the whole crate is [here](https://weltraumschaf.github.io/game_of_life/game_of_live/index.html).
+
 ## The Rules
 
 There are four simple rules when a living cell dies or a new cell will be born:

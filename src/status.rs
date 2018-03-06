@@ -14,33 +14,39 @@ pub struct Status {
 }
 
 impl Status {
+    /// Creates a new status.
     pub fn new(iteration: usize, cells: usize, born: usize, died: usize) -> Status {
         Status { iteration, cells, born, died }
     }
 
+    /// Get the iteration count.
+    pub fn get_iteration(&self) -> usize {
+        self.iteration
+    }
+
+    /// Get the number of living cells of this iteration.
+    pub fn get_cells(&self) -> usize {
+        self.cells
+    }
+
+    /// Get the number of born cells in this iteration.
+    pub fn get_born(&self) -> usize {
+        self.born
+    }
+
+    /// Get the number of died cells in this iteration.
+    pub fn get_died(&self) -> usize {
+        self.died
+    }
+
     fn stringify(&self) -> String {
+        // TODO move in format
         format!(
             "Iteration: {}, Cells: {}, Born: {}, Died: {}",
             self.iteration,
             self.cells,
             self.born,
             self.died)
-    }
-
-    pub fn get_iteration(&self) -> usize {
-        self.iteration
-    }
-
-    pub fn get_cells(&self) -> usize {
-        self.cells
-    }
-
-    pub fn get_born(&self) -> usize {
-        self.born
-    }
-
-    pub fn get_died(&self) -> usize {
-        self.died
     }
 }
 

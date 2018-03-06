@@ -3,9 +3,9 @@
 extern crate hamcrest;
 extern crate game_of_live;
 
-use game_of_live::Population;
-use game_of_live::Cell;
-use game_of_live::Place;
+use game_of_live::population::Population;
+use game_of_live::cell::Cell;
+use game_of_live::place::Place;
 
 fn main() {
     println!("Game of Live");
@@ -32,10 +32,4 @@ fn main() {
     );
     let initial = Population::new(10, 5, cells);
     println!("{}", initial);
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use hamcrest::prelude::*;
 }

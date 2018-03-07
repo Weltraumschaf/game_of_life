@@ -35,6 +35,23 @@ impl Population {
     }
 
     fn next_generation(&self) -> Population {
+        let (next, survived) = self.vist_all_living_cells();
+
+        if next.get_cells() != survived.len() {
+            panic!(
+                "This size of status cells and survived length must not differ: {} != {}!",
+                next.get_cells(), survived.len()
+            );
+        }
+
+        Population {
+            status: next,
+            size: self.size.clone(),
+            cells: survived,
+        }
+    }
+
+    fn vist_all_living_cells(&self) -> (Status, Vec<Cell>) {
         let mut next = self.get_status().inc_iteration();
         let mut survived: Vec<Cell> = Vec::new();
 
@@ -62,18 +79,7 @@ impl Population {
             }
         }
 
-        if next.get_cells() != survived.len() {
-            panic!(
-                "This size of status cells and survived length must not differ: {} != {}!",
-                next.get_cells(), survived.len()
-            );
-        }
-
-        Population {
-            status: next,
-            size: self.size.clone(),
-            cells: survived,
-        }
+        (next, survived)
     }
 
     fn get_cell(&self, position: &Place) -> Option<Cell> {

@@ -35,9 +35,8 @@ impl Population {
     }
 
     fn next_generation(&self) -> Population {
+        let mut next = self.get_status().inc_iteration();
         let mut survived: Vec<Cell> = Vec::new();
-        let mut born = 0;
-        let mut died = 0;
 
         for y in 0..self.size.get_height() {
             for x in 0..self.size.get_width() {
@@ -47,14 +46,15 @@ impl Population {
                 match self.get_cell(&current) {
                     Some(cell) => {
                         if should_die(number_of_neighbours) {
-                            died += 1;
+                            next = next.inc_died();
                         } else {
                             survived.push(cell);
+                            next = next.inc_cells();
                         }
                     },
                     None => {
                         if should_spawn(number_of_neighbours) {
-                            born += 1;
+                            next = next.inc_born();
                             survived.push(Cell::new(current));
                         }
                     },
@@ -62,10 +62,15 @@ impl Population {
             }
         }
 
-        let iteration = self.get_status().get_iteration() + 1;
+        if next.get_cells() != survived.len() {
+            panic!(
+                "This size of status cells and survived length must not differ: {} != {}!",
+                next.get_cells(), survived.len()
+            );
+        }
 
         Population {
-            status: Status::new(iteration, survived.len(), born, died),
+            status: next,
             size: self.size.clone(),
             cells: survived,
         }
@@ -150,11 +155,11 @@ mod tests {
 
     #[test]
     fn generate_next_population_from_empty_population() {
-        let initial = Population::new(5, 5, Vec::new());
+        let sut = Population::new(5, 5, Vec::new());
 
-        let next = initial.next_generation();
+        let next = sut.next_generation();
 
-        assert_that!(initial.get_status().get_iteration(), is(equal_to(0)));
+        assert_that!(sut.get_status().get_iteration(), is(equal_to(0)));
         assert_that!(next.get_status().get_iteration(), is(equal_to(1)));
         assert_that!(next.get_status().get_cells(), is(equal_to(0)));
     }
@@ -164,8 +169,8 @@ mod tests {
         let cells: Vec<Cell> = vec![
             Cell::new(Place::new(9, 4))
         ];
-        let sut = Population::new(10, 5, cells);
 
+        let sut = Population::new(10, 5, cells);
         let next = sut.next_generation().get_status();
 
         assert_that!(next.get_cells(), is(equal_to(0)));
@@ -178,8 +183,8 @@ mod tests {
             Cell::new(Place::new(8, 4)),
             Cell::new(Place::new(9, 4))
         ];
-        let sut = Population::new(10, 5, cells);
 
+        let sut = Population::new(10, 5, cells);
         let next = sut.next_generation().get_status();
 
         assert_that!(next.get_cells(), is(equal_to(0)));
@@ -192,13 +197,17 @@ mod tests {
         let cells: Vec<Cell> = vec![
             Cell::new(Place::new(8, 4)),
             Cell::new(Place::new(9, 4)),
-            Cell::new(Place::new(10, 4))
+            Cell::new(Place::new(9, 5))
         ];
-        let sut = Population::new(10, 5, cells);
 
-        let next = sut.next_generation().get_status();
-        assert_that!(next.get_cells(), is(equal_to(1)));
-        assert_that!(next.get_died(), is(equal_to(2)));
+        let sut = Population::new(10, 5, cells);
+        let next = sut.next_generation();
+
+        assert_that!(next.get_status().get_cells(), is(equal_to(1)));
+        assert_that!(next.get_status().get_died(), is(equal_to(2)));
+        assert_that!(next.has_cell(&Place::new(8, 4)), is(equal_to(false)));
+        assert_that!(next.has_cell(&Place::new(9, 4)), is(equal_to(true)));
+        assert_that!(next.has_cell(&Place::new(10, 4)), is(equal_to(false)));
     }
 
     #[test]

@@ -24,14 +24,46 @@ impl Status {
         self.iteration
     }
 
+    /// This method increases the iteration property by one and returns a new status. The original
+    /// status will be unchanged.
+    pub fn inc_iteration(&self) -> Status {
+        Status {
+            iteration: self.get_iteration() + 1,
+            cells: self.get_cells(),
+            born: self.get_born(),
+            died: self.get_died(),
+        }
+    }
+
     /// Get the number of living cells of this iteration.
     pub fn get_cells(&self) -> usize {
         self.cells
     }
 
+    /// This method increases the cells property by one and returns a new status. The original
+    /// status will be unchanged.
+    pub fn inc_cells(&self) -> Status {
+        Status {
+            iteration: self.get_iteration(),
+            cells: self.get_cells() + 1,
+            born: self.get_born(),
+            died: self.get_died(),
+        }
+    }
     /// Get the number of born cells in this iteration.
     pub fn get_born(&self) -> usize {
         self.born
+    }
+
+    /// This method increases the born property the cells property by one and returns a new status.
+    /// The original status will be unchanged.
+    pub fn inc_born(&self) -> Status {
+        Status {
+            iteration: self.get_iteration(),
+            cells: self.get_cells() + 1,
+            born: self.get_born() + 1,
+            died: self.get_died(),
+        }
     }
 
     /// Get the number of died cells in this iteration.
@@ -39,6 +71,16 @@ impl Status {
         self.died
     }
 
+    /// This method increases the died property by one and decreases the cells property by one and
+    /// returns a new status. The original status will be unchanged.
+    pub fn inc_died(&self) -> Status {
+        Status {
+            iteration: self.get_iteration(),
+            cells: self.get_cells() - 1,
+            born: self.get_born(),
+            died: self.get_died() + 1,
+        }
+    }
 }
 
 impl fmt::Display for Status {
@@ -59,7 +101,37 @@ mod tests {
     use hamcrest::prelude::*;
 
     #[test]
-    fn stringify() {
+    fn inc_iteration() {
+        let sut = Status::new(23, 0, 0, 0).inc_iteration();
+
+        assert_that!(sut.get_iteration(), is(equal_to(24)));
+    }
+
+    #[test]
+    fn inc_cells() {
+        let sut = Status::new(0, 23, 0, 0).inc_cells();
+
+        assert_that!(sut.get_cells(), is(equal_to(24)));
+    }
+
+    #[test]
+    fn inc_born() {
+        let sut = Status::new(0, 10, 5, 0).inc_born();
+
+        assert_that!(sut.get_cells(), is(equal_to(11)));
+        assert_that!(sut.get_born(), is(equal_to(6)));
+    }
+
+    #[test]
+    fn inc_died() {
+        let sut = Status::new(0, 10, 0, 5).inc_died();
+
+        assert_that!(sut.get_cells(), is(equal_to(9)));
+        assert_that!(sut.get_died(), is(equal_to(6)));
+    }
+
+    #[test]
+    fn fmt() {
         let status = Status::new(42, 23, 5, 3);
 
         assert_that!(

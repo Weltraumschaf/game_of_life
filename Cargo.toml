@@ -11,6 +11,7 @@ travis-ci = { repository = "Weltraumschaf/game_of_live", branch = "master" }
 codecov = { repository = "Weltraumschaf/game_of_live", branch = "master", service = "github" }
 
 [dependencies]
+clap = "2.29.2"
 
 [dev-dependencies]
 hamcrest = "0.1.5"

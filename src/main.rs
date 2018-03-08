@@ -1,6 +1,3 @@
-#[cfg(test)]
-#[macro_use]
-extern crate hamcrest;
 extern crate game_of_live;
 
 use game_of_live::population::Population;

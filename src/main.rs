@@ -2,10 +2,11 @@ extern crate game_of_life;
 extern crate clap;
 
 use std::{thread, time};
-use clap::{Arg, App, ArgMatches};
+use clap::{Arg, App};
 use game_of_life::population::Population;
 use game_of_life::cell::Cell;
 use game_of_life::place::Place;
+use game_of_life::config::create_config;
 
 /// The main entry point of the binary.
 ///
@@ -33,30 +34,20 @@ fn main() {
             .help("Sets sleep time in seconds between the population iterations. Default is 1.")
             .takes_value(true))
         .get_matches();
-    let (width, height, sleep) = get_config(&matches);
+    let config = create_config(&matches);
 
-    let mut population = Population::new(width, height, create_initial_cells());
+    let mut population = Population::new(
+        config.get_width(),
+        config.get_height(),
+        create_initial_cells());
 
     loop {
         clear_screen();
         print_header();
         println!("{}", population);
         population = population.next_generation();
-        wait(sleep);
+        wait(config.get_sleep());
     }
-}
-
-fn get_config(matches: &ArgMatches) -> (usize, usize, u64) {
-    let width = matches.value_of("width").unwrap_or("20");
-    let width = width.parse::<usize>().expect("Not negative number expected as width!");
-
-    let height = matches.value_of("height").unwrap_or("20");
-    let height = height.parse::<usize>().expect("Not negative number expected as height!");
-
-    let sleep = matches.value_of("sleep").unwrap_or("1");
-    let sleep = sleep.parse::<u64>().expect("Not negative number expected as sleep!");
-
-    (width, height, sleep)
 }
 
 fn create_initial_cells() -> Vec<Cell> {

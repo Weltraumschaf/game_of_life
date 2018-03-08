@@ -8,4 +8,5 @@ pub mod config;
 mod dimension;
 pub mod place;
 pub mod population;
+pub mod screen;
 mod status;

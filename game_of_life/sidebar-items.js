@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["cell",""],["place",""],["population",""]]});
+initSidebarItems({"mod":[["cell",""],["config",""],["place",""],["population",""],["screen",""]]});

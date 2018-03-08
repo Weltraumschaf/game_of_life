@@ -168,23 +168,6 @@
 <span id="122">122</span>
 <span id="123">123</span>
 <span id="124">124</span>
-<span id="125">125</span>
-<span id="126">126</span>
-<span id="127">127</span>
-<span id="128">128</span>
-<span id="129">129</span>
-<span id="130">130</span>
-<span id="131">131</span>
-<span id="132">132</span>
-<span id="133">133</span>
-<span id="134">134</span>
-<span id="135">135</span>
-<span id="136">136</span>
-<span id="137">137</span>
-<span id="138">138</span>
-<span id="139">139</span>
-<span id="140">140</span>
-<span id="141">141</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
@@ -228,16 +211,6 @@
         <span class="self">self</span>.<span class="ident">cells</span>
     }
 
-    <span class="doccomment">/// This method increases the cells property by one and returns a new status. The original</span>
-    <span class="doccomment">/// status will be unchanged.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inc_cells</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Status</span> {
-        <span class="ident">Status</span> {
-            <span class="ident">iteration</span>: <span class="self">self</span>.<span class="ident">get_iteration</span>(),
-            <span class="ident">cells</span>: <span class="self">self</span>.<span class="ident">get_cells</span>() <span class="op">+</span> <span class="number">1</span>,
-            <span class="ident">born</span>: <span class="self">self</span>.<span class="ident">get_born</span>(),
-            <span class="ident">died</span>: <span class="self">self</span>.<span class="ident">get_died</span>(),
-        }
-    }
     <span class="doccomment">/// Get the number of born cells in this iteration.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_born</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">born</span>
@@ -293,13 +266,6 @@
         <span class="kw">let</span> <span class="ident">sut</span> <span class="op">=</span> <span class="ident">Status</span>::<span class="ident">new</span>(<span class="number">23</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>).<span class="ident">inc_iteration</span>();
 
         <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">sut</span>.<span class="ident">get_iteration</span>(), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="number">24</span>)));
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">inc_cells</span>() {
-        <span class="kw">let</span> <span class="ident">sut</span> <span class="op">=</span> <span class="ident">Status</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">23</span>, <span class="number">0</span>, <span class="number">0</span>).<span class="ident">inc_cells</span>();
-
-        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">sut</span>.<span class="ident">get_cells</span>(), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="number">24</span>)));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

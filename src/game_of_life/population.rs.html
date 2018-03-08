@@ -521,6 +521,57 @@
 <span id="475">475</span>
 <span id="476">476</span>
 <span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">cell</span>::<span class="ident">Cell</span>;
 <span class="kw">use</span> <span class="ident">dimension</span>::<span class="ident">Dimension</span>;
@@ -530,7 +581,7 @@
 <span class="kw">use</span> <span class="ident">status</span>::<span class="ident">Status</span>;
 
 <span class="doccomment">/// This struct describes a population of cells.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Population</span> {
     <span class="doccomment">/// The status of this population.</span>
     <span class="ident">status</span>: <span class="ident">Status</span>,
@@ -558,8 +609,8 @@
         <span class="self">self</span>.<span class="ident">cells</span>.<span class="ident">clone</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">next_generation</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Population</span> {
-        <span class="kw">let</span> (<span class="ident">next</span>, <span class="ident">survived</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">visit_all_living_cells</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">next_generation</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Population</span> {
+        <span class="kw">let</span> (<span class="ident">next</span>, <span class="ident">survived</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">visit_all_places</span>();
 
         <span class="kw">if</span> <span class="ident">next</span>.<span class="ident">get_cells</span>() <span class="op">!=</span> <span class="ident">survived</span>.<span class="ident">len</span>() {
             <span class="macro">panic</span><span class="macro">!</span>(
@@ -575,40 +626,39 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_all_living_cells</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">Status</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Cell</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">visit_all_places</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">Status</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Cell</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">next</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_status</span>().<span class="ident">inc_iteration</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">survived</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Cell</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
         <span class="kw">for</span> <span class="ident">y</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">size</span>.<span class="ident">get_height</span>() {
             <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">size</span>.<span class="ident">get_width</span>() {
-                <span class="kw">let</span> (<span class="ident">current_place</span>, <span class="ident">number_of_neighbours</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">current_cell</span>(<span class="ident">x</span>, <span class="ident">y</span>);
-
-                <span class="kw">match</span> <span class="self">self</span>.<span class="ident">get_cell</span>(<span class="kw-2">&amp;</span><span class="ident">current_place</span>) {
-                    <span class="prelude-val">Some</span>(<span class="ident">cell</span>) <span class="op">=&gt;</span> {
-                        <span class="kw">if</span> <span class="ident">should_die</span>(<span class="ident">number_of_neighbours</span>) {
-                            <span class="ident">next</span> <span class="op">=</span> <span class="ident">next</span>.<span class="ident">inc_died</span>();
-                        } <span class="kw">else</span> {
-                            <span class="ident">survived</span>.<span class="ident">push</span>(<span class="ident">cell</span>);
-                            <span class="ident">next</span> <span class="op">=</span> <span class="ident">next</span>.<span class="ident">inc_cells</span>();
-                        }
-                    },
-                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
-                        <span class="kw">if</span> <span class="ident">should_spawn</span>(<span class="ident">number_of_neighbours</span>) {
-                            <span class="ident">next</span> <span class="op">=</span> <span class="ident">next</span>.<span class="ident">inc_born</span>();
-                            <span class="ident">survived</span>.<span class="ident">push</span>(<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="ident">current_place</span>));
-                        }
-                    },
-                }
+                <span class="ident">next</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">visit_place</span>(<span class="ident">Place</span>::<span class="ident">new</span>(<span class="ident">x</span>, <span class="ident">y</span>), <span class="ident">next</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">survived</span>);
             }
         }
 
         (<span class="ident">next</span>, <span class="ident">survived</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">current_cell</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> (<span class="ident">Place</span>, <span class="ident">usize</span>) {
-        <span class="kw">let</span> <span class="ident">current_place</span> <span class="op">=</span> <span class="ident">Place</span>::<span class="ident">new</span>(<span class="ident">x</span>, <span class="ident">y</span>);
+    <span class="kw">fn</span> <span class="ident">visit_place</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">current_place</span>: <span class="ident">Place</span>, <span class="ident">next</span>: <span class="ident">Status</span>, <span class="ident">survived</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Cell</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Status</span> {
         <span class="kw">let</span> <span class="ident">number_of_neighbours</span> <span class="op">=</span> <span class="ident">count_neighbours</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">cells</span>, <span class="kw-2">&amp;</span><span class="ident">current_place</span>);
-        (<span class="ident">current_place</span>, <span class="ident">number_of_neighbours</span>)
+
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">get_cell</span>(<span class="kw-2">&amp;</span><span class="ident">current_place</span>) {
+            <span class="prelude-val">Some</span>(<span class="ident">cell</span>) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">should_die</span>(<span class="ident">number_of_neighbours</span>) {
+                    <span class="kw">return</span> <span class="ident">next</span>.<span class="ident">inc_died</span>();
+                } <span class="kw">else</span> {
+                    <span class="ident">survived</span>.<span class="ident">push</span>(<span class="ident">cell</span>);
+                }
+            },
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">should_spawn</span>(<span class="ident">number_of_neighbours</span>) {
+                    <span class="ident">survived</span>.<span class="ident">push</span>(<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="ident">current_place</span>));
+                    <span class="kw">return</span> <span class="ident">next</span>.<span class="ident">inc_born</span>();
+                }
+            },
+        }
+
+        <span class="ident">next</span>
     }
 
     <span class="kw">fn</span> <span class="ident">get_cell</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">position</span>: <span class="kw-2">&amp;</span><span class="ident">Place</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cell</span><span class="op">&gt;</span> {
@@ -641,6 +691,35 @@
             }
 
             <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">&#39;\n&#39;</span>);
+        }
+
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">buf</span>)
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Population</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
+
+        <span class="kw">for</span> <span class="ident">y</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">size</span>.<span class="ident">get_height</span>() {
+            <span class="ident">buf</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">y</span>));
+
+            <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">size</span>.<span class="ident">get_width</span>() {
+                <span class="kw">let</span> <span class="ident">current</span> <span class="op">=</span> <span class="ident">Place</span>::<span class="ident">new</span>(<span class="ident">x</span>, <span class="ident">y</span>);
+
+                <span class="kw">match</span> <span class="self">self</span>.<span class="ident">get_cell</span>(<span class="kw-2">&amp;</span><span class="ident">current</span>) {
+                    <span class="prelude-val">Some</span>(_) <span class="op">=&gt;</span> <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">&#39;O&#39;</span>),
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">&#39; &#39;</span>),
+                }
+            }
+
+            <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">&#39;\n&#39;</span>);
+        }
+
+        <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">&#39; &#39;</span>);
+
+        <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">size</span>.<span class="ident">get_width</span>() {
+            <span class="ident">buf</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">x</span>));
         }
 
         <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">buf</span>)
@@ -727,27 +806,50 @@
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="attribute">#[<span class="ident">ignore</span>]</span>
     <span class="kw">fn</span> <span class="ident">generate_next_population_cell_with_two_neighbours_survives</span>() {
         <span class="kw">let</span> <span class="ident">cells</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Cell</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
-            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">8</span>, <span class="number">4</span>)),
-            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">9</span>, <span class="number">4</span>)),
-            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">9</span>, <span class="number">5</span>))
+            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">5</span>, <span class="number">3</span>)),
+            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">6</span>, <span class="number">3</span>)),
+            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">7</span>, <span class="number">3</span>))
         ];
 
         <span class="kw">let</span> <span class="ident">sut</span> <span class="op">=</span> <span class="ident">Population</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">5</span>, <span class="ident">cells</span>);
         <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="ident">sut</span>.<span class="ident">next_generation</span>();
 
-        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">get_status</span>().<span class="ident">get_cells</span>(), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="number">1</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">get_status</span>().<span class="ident">get_cells</span>(), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="number">3</span>)));
         <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">get_status</span>().<span class="ident">get_died</span>(), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="number">2</span>)));
-        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">8</span>, <span class="number">4</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">false</span>)));
-        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">9</span>, <span class="number">4</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">true</span>)));
-        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">4</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">false</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">get_status</span>().<span class="ident">get_born</span>(), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="number">2</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">5</span>, <span class="number">3</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">false</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">7</span>, <span class="number">3</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">false</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">6</span>, <span class="number">2</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">true</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">6</span>, <span class="number">3</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">true</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">6</span>, <span class="number">4</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">true</span>)));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="attribute">#[<span class="ident">ignore</span>]</span>
-    <span class="kw">fn</span> <span class="ident">generate_next_population_cell_with_three_neighbours_survive</span>() {}
+    <span class="kw">fn</span> <span class="ident">generate_next_population_cell_with_three_neighbours_survive</span>() {
+        <span class="kw">let</span> <span class="ident">cells</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Cell</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">2</span>, <span class="number">2</span>)),
+            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">3</span>, <span class="number">2</span>)),
+            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">4</span>, <span class="number">2</span>)),
+            <span class="ident">Cell</span>::<span class="ident">new</span>(<span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">3</span>, <span class="number">3</span>))
+        ];
+
+        <span class="kw">let</span> <span class="ident">sut</span> <span class="op">=</span> <span class="ident">Population</span>::<span class="ident">new</span>(<span class="number">10</span>, <span class="number">5</span>, <span class="ident">cells</span>);
+        <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="ident">sut</span>.<span class="ident">next_generation</span>();
+
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">get_status</span>().<span class="ident">get_cells</span>(), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="number">7</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">get_status</span>().<span class="ident">get_died</span>(), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="number">0</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">get_status</span>().<span class="ident">get_born</span>(), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="number">3</span>)));
+
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">3</span>, <span class="number">1</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">true</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">2</span>, <span class="number">2</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">true</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">3</span>, <span class="number">2</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">true</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">4</span>, <span class="number">2</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">true</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">2</span>, <span class="number">3</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">true</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">3</span>, <span class="number">3</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">true</span>)));
+        <span class="macro">assert_that</span><span class="macro">!</span>(<span class="ident">next</span>.<span class="ident">has_cell</span>(<span class="kw-2">&amp;</span><span class="ident">Place</span>::<span class="ident">new</span>(<span class="number">4</span>, <span class="number">3</span>)), <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="bool-val">true</span>)));
+    }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">ignore</span>]</span>

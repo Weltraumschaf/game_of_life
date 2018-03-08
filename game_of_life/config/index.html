@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `game_of_life` crate.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, game_of_life">
+    <meta name="description" content="API documentation for the Rust `config` mod in crate `game_of_life`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, config">
 
-    <title>game_of_life - Rust</title>
+    <title>game_of_life::config - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
     
 
     
@@ -30,7 +30,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate game_of_life</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'game_of_life', ty: 'mod', relpath: '../'};</script></div>
+        <p class='location'>Module config</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>game_of_life</a></p><script>window.sidebarCurrent = {name: 'config', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
     <nav class="sub">
@@ -45,46 +45,27 @@
     </nav>
 
     <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>game_of_life</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>game_of_life</a>::<wbr><a class="mod" href=''>config</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/game_of_life/lib.rs.html#1-12' title='goto source code'>[src]</a></span></h1>
-<h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+               </span><a class='srclink' href='../../src/game_of_life/config.rs.html#1-46' title='goto source code'>[src]</a></span></h1>
+<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class="mod" href="cell/index.html"
-                                  title='mod game_of_life::cell'>cell</a></td>
+                           <td><a class="struct" href="struct.Config.html"
+                                  title='struct game_of_life::config::Config'>Config</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>This struct holds the configuration for the game.</p>
                            </td>
-                       </tr>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
                        <tr class=' module-item'>
-                           <td><a class="mod" href="config/index.html"
-                                  title='mod game_of_life::config'>config</a></td>
+                           <td><a class="fn" href="fn.create_config.html"
+                                  title='fn game_of_life::config::create_config'>create_config</a></td>
                            <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="place/index.html"
-                                  title='mod game_of_life::place'>place</a></td>
-                           <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="population/index.html"
-                                  title='mod game_of_life::population'>population</a></td>
-                           <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="screen/index.html"
-                                  title='mod game_of_life::screen'>screen</a></td>
-                           <td class='docblock-short'>
-                                
+                                <p>Creates a new config from the arguments matcher.
+This function validates the values and throws an error if not met requirements.</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -142,10 +123,10 @@
     
 
     <script>
-        window.rootPath = "../";
+        window.rootPath = "../../";
         window.currentCrate = "game_of_life";
     </script>
-    <script src="../main.js"></script>
-    <script defer src="../search-index.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

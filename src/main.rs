@@ -3,11 +3,10 @@ extern crate clap;
 
 use std::thread;
 use clap::{Arg, App};
-use game_of_life::cell::Cell;
 use game_of_life::config::create_config;
-use game_of_life::place::Place;
+use game_of_life::create_initial_cells;
 use game_of_life::population::Population;
-use game_of_life::screen::*;
+use game_of_life::screen::{clear, print_header};
 
 /// The main entry point of the binary.
 ///
@@ -51,12 +50,3 @@ fn main() {
     }
 }
 
-fn create_initial_cells() -> Vec<Cell> {
-    vec![
-        Cell::new(Place::new(13, 9)),
-        Cell::new(Place::new(12, 10)),
-        Cell::new(Place::new(13, 10)),
-        Cell::new(Place::new(14, 10)),
-        Cell::new(Place::new(13, 11))
-    ]
-}

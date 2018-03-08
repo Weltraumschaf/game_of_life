@@ -3,10 +3,23 @@
 extern crate hamcrest;
 extern crate clap;
 
-pub mod cell;
+mod cell;
 pub mod config;
 mod dimension;
-pub mod place;
+mod place;
 pub mod population;
 pub mod screen;
 mod status;
+
+use place::Place;
+use cell::Cell;
+
+pub fn create_initial_cells() -> Vec<Cell> {
+    vec![
+        Cell::new(Place::new(13, 9)),
+        Cell::new(Place::new(12, 10)),
+        Cell::new(Place::new(13, 10)),
+        Cell::new(Place::new(14, 10)),
+        Cell::new(Place::new(13, 11))
+    ]
+}

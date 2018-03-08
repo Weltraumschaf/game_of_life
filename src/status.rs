@@ -40,16 +40,6 @@ impl Status {
         self.cells
     }
 
-    /// This method increases the cells property by one and returns a new status. The original
-    /// status will be unchanged.
-    pub fn inc_cells(&self) -> Status {
-        Status {
-            iteration: self.get_iteration(),
-            cells: self.get_cells() + 1,
-            born: self.get_born(),
-            died: self.get_died(),
-        }
-    }
     /// Get the number of born cells in this iteration.
     pub fn get_born(&self) -> usize {
         self.born
@@ -105,13 +95,6 @@ mod tests {
         let sut = Status::new(23, 0, 0, 0).inc_iteration();
 
         assert_that!(sut.get_iteration(), is(equal_to(24)));
-    }
-
-    #[test]
-    fn inc_cells() {
-        let sut = Status::new(0, 23, 0, 0).inc_cells();
-
-        assert_that!(sut.get_cells(), is(equal_to(24)));
     }
 
     #[test]

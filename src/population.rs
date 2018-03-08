@@ -34,7 +34,7 @@ impl Population {
         self.cells.clone()
     }
 
-    fn next_generation(&self) -> Population {
+    pub fn next_generation(&self) -> Population {
         let (next, survived) = self.visit_all_living_cells();
 
         if next.get_cells() != survived.len() {
@@ -65,7 +65,6 @@ impl Population {
                             next = next.inc_died();
                         } else {
                             survived.push(cell);
-                            next = next.inc_cells();
                         }
                     },
                     None => {
@@ -203,22 +202,24 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn generate_next_population_cell_with_two_neighbours_survives() {
         let cells: Vec<Cell> = vec![
-            Cell::new(Place::new(8, 4)),
-            Cell::new(Place::new(9, 4)),
-            Cell::new(Place::new(9, 5))
+            Cell::new(Place::new(5, 3)),
+            Cell::new(Place::new(6, 3)),
+            Cell::new(Place::new(7, 3))
         ];
 
         let sut = Population::new(10, 5, cells);
         let next = sut.next_generation();
 
-        assert_that!(next.get_status().get_cells(), is(equal_to(1)));
+        assert_that!(next.get_status().get_cells(), is(equal_to(3)));
         assert_that!(next.get_status().get_died(), is(equal_to(2)));
-        assert_that!(next.has_cell(&Place::new(8, 4)), is(equal_to(false)));
-        assert_that!(next.has_cell(&Place::new(9, 4)), is(equal_to(true)));
-        assert_that!(next.has_cell(&Place::new(10, 4)), is(equal_to(false)));
+        assert_that!(next.get_status().get_born(), is(equal_to(2)));
+        assert_that!(next.has_cell(&Place::new(5, 3)), is(equal_to(false)));
+        assert_that!(next.has_cell(&Place::new(7, 3)), is(equal_to(false)));
+        assert_that!(next.has_cell(&Place::new(6, 2)), is(equal_to(true)));
+        assert_that!(next.has_cell(&Place::new(6, 3)), is(equal_to(true)));
+        assert_that!(next.has_cell(&Place::new(6, 4)), is(equal_to(true)));
     }
 
     #[test]

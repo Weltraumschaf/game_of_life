@@ -14,24 +14,13 @@ fn main() {
     println!("============");
     println!();
 
-    let cells: Vec<Cell> = vec!(
-        Cell::new(Place::new(0, 0)),
-        Cell::new(Place::new(9, 0)),
-        Cell::new(Place::new(0, 1)),
-        Cell::new(Place::new(2, 1)),
-        Cell::new(Place::new(7, 1)),
-        Cell::new(Place::new(9, 1)),
-        Cell::new(Place::new(0, 2)),
-        Cell::new(Place::new(3, 2)),
-        Cell::new(Place::new(6, 2)),
-        Cell::new(Place::new(9, 2)),
-        Cell::new(Place::new(0, 3)),
-        Cell::new(Place::new(4, 3)),
+    let cells: Vec<Cell> = vec![
         Cell::new(Place::new(5, 3)),
-        Cell::new(Place::new(9, 3)),
-        Cell::new(Place::new(0, 4)),
-        Cell::new(Place::new(9, 4))
-    );
+        Cell::new(Place::new(6, 3)),
+        Cell::new(Place::new(7, 3))
+    ];
+
     let initial = Population::new(10, 5, cells);
-    println!("{}", initial);
+    let next = initial.next_generation();
+    println!("{}", next);
 }

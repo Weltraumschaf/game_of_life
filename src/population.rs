@@ -261,8 +261,19 @@ mod tests {
         ];
 
         let sut = Population::new(10, 5, cells);
+        let next = sut.next_generation();
 
-        println!("{:?}", sut);
+        assert_that!(next.get_status().get_cells(), is(equal_to(7)));
+        assert_that!(next.get_status().get_died(), is(equal_to(0)));
+        assert_that!(next.get_status().get_born(), is(equal_to(3)));
+
+        assert_that!(next.has_cell(&Place::new(3, 1)), is(equal_to(true)));
+        assert_that!(next.has_cell(&Place::new(2, 2)), is(equal_to(true)));
+        assert_that!(next.has_cell(&Place::new(3, 2)), is(equal_to(true)));
+        assert_that!(next.has_cell(&Place::new(4, 2)), is(equal_to(true)));
+        assert_that!(next.has_cell(&Place::new(2, 3)), is(equal_to(true)));
+        assert_that!(next.has_cell(&Place::new(3, 3)), is(equal_to(true)));
+        assert_that!(next.has_cell(&Place::new(4, 3)), is(equal_to(true)));
     }
 
     #[test]

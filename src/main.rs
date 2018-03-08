@@ -15,12 +15,15 @@ fn main() {
     println!();
 
     let cells: Vec<Cell> = vec![
-        Cell::new(Place::new(5, 3)),
-        Cell::new(Place::new(6, 3)),
-        Cell::new(Place::new(7, 3))
+        Cell::new(Place::new(2, 2)),
+        Cell::new(Place::new(3, 2)),
+        Cell::new(Place::new(4, 2)),
+        Cell::new(Place::new(3, 3))
     ];
 
-    let initial = Population::new(10, 5, cells);
-    let next = initial.next_generation();
-    println!("{}", next);
+    let sut = Population::new(10, 5, cells);
+    let next = sut.next_generation();
+
+    println!("{:?}", sut);
+    println!("{:?}", next);
 }

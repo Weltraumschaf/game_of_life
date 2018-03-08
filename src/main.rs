@@ -3,6 +3,7 @@ extern crate game_of_life;
 use game_of_life::population::Population;
 use game_of_life::cell::Cell;
 use game_of_life::place::Place;
+use std::{thread, time};
 
 /// The main entry point of the binary.
 ///
@@ -10,20 +11,36 @@ use game_of_life::place::Place;
 /// is in the library part of the crate (and so can be used as a dependency). The main module only
 /// provides the main function with simple code which delegates to the library part.
 fn main() {
+    let cells: Vec<Cell> = vec![
+        Cell::new(Place::new(13, 9)),
+        Cell::new(Place::new(12, 10)),
+        Cell::new(Place::new(13, 10)),
+        Cell::new(Place::new(14, 10)),
+        Cell::new(Place::new(13, 11))
+    ];
+
+    let mut population = Population::new(20, 20, cells);
+
+    loop {
+        clear_screen();
+        print_header();
+        println!("{}", population);
+        population = population.next_generation();
+        wait();
+    }
+}
+
+fn print_header() {
     println!("Game of Live");
     println!("============");
     println!();
+}
 
-    let cells: Vec<Cell> = vec![
-        Cell::new(Place::new(2, 2)),
-        Cell::new(Place::new(3, 2)),
-        Cell::new(Place::new(4, 2)),
-        Cell::new(Place::new(3, 3))
-    ];
+fn wait() {
+    let pause = time::Duration::from_secs(1);
+    thread::sleep(pause);
+}
 
-    let sut = Population::new(10, 5, cells);
-    let next = sut.next_generation();
-
-    println!("{:?}", sut);
-    println!("{:?}", next);
+fn clear_screen() {
+    print!("\x1b[2J\x1b[1;1H");
 }

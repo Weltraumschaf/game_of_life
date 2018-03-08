@@ -35,7 +35,7 @@ impl Population {
     }
 
     pub fn next_generation(&self) -> Population {
-        let (next, survived) = self.visit_all_living_cells();
+        let (next, survived) = self.visit_all_places();
 
         if next.get_cells() != survived.len() {
             panic!(
@@ -51,39 +51,39 @@ impl Population {
         }
     }
 
-    fn visit_all_living_cells(&self) -> (Status, Vec<Cell>) {
+    fn visit_all_places(&self) -> (Status, Vec<Cell>) {
         let mut next = self.get_status().inc_iteration();
         let mut survived: Vec<Cell> = Vec::new();
 
         for y in 0..self.size.get_height() {
             for x in 0..self.size.get_width() {
-                let (current_place, number_of_neighbours) = self.current_cell(x, y);
-
-                match self.get_cell(&current_place) {
-                    Some(cell) => {
-                        if should_die(number_of_neighbours) {
-                            next = next.inc_died();
-                        } else {
-                            survived.push(cell);
-                        }
-                    },
-                    None => {
-                        if should_spawn(number_of_neighbours) {
-                            next = next.inc_born();
-                            survived.push(Cell::new(current_place));
-                        }
-                    },
-                }
+                next = self.visit_place(Place::new(x, y), next, &mut survived);
             }
         }
 
         (next, survived)
     }
 
-    fn current_cell(&self, x: usize, y: usize) -> (Place, usize) {
-        let current_place = Place::new(x, y);
+    fn visit_place(&self, current_place: Place, next: Status, survived: &mut Vec<Cell>) -> Status {
         let number_of_neighbours = count_neighbours(&self.cells, &current_place);
-        (current_place, number_of_neighbours)
+
+        match self.get_cell(&current_place) {
+            Some(cell) => {
+                if should_die(number_of_neighbours) {
+                    return next.inc_died();
+                } else {
+                    survived.push(cell);
+                }
+            },
+            None => {
+                if should_spawn(number_of_neighbours) {
+                    survived.push(Cell::new(current_place));
+                    return next.inc_born();
+                }
+            },
+        }
+
+        next
     }
 
     fn get_cell(&self, position: &Place) -> Option<Cell> {

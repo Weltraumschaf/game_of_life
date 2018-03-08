@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `cell` mod in crate `game_of_live`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, cell">
+    <meta name="description" content="API documentation for the Rust `distance` fn in crate `game_of_life`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, distance">
 
-    <title>game_of_live::cell - Rust</title>
+    <title>game_of_life::place::distance - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc mod">
+<body class="rustdoc fn">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -30,7 +30,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module cell</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li></ul></div><p class='location'><a href='../index.html'>game_of_live</a></p><script>window.sidebarCurrent = {name: 'cell', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
+        <p class='location'><a href='../index.html'>game_of_life</a>::<wbr><a href='index.html'>place</a></p><script>window.sidebarCurrent = {name: 'distance', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -45,20 +45,19 @@
     </nav>
 
     <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>game_of_live</a>::<wbr><a class="mod" href=''>cell</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>game_of_life</a>::<wbr><a href='index.html'>place</a>::<wbr><a class="fn" href=''>distance</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/game_of_live/cell.rs.html#1-19' title='goto source code'>[src]</a></span></h1>
-<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Cell.html"
-                                  title='struct game_of_live::cell::Cell'>Cell</a></td>
-                           <td class='docblock-short'>
-                                <p>This struct represents a living cell.</p>
-                           </td>
-                       </tr></table></section>
+               </span><a class='srclink' href='../../src/game_of_life/place.rs.html#57-62' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn distance(a: &amp;<a class="struct" href="../../game_of_life/place/struct.Place.html" title="struct game_of_life::place::Place">Place</a>, b: &amp;<a class="struct" href="../../game_of_life/place/struct.Place.html" title="struct game_of_life::place::Place">Place</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a></pre><div class='docblock'><p>This function calculates the distance of two places.</p>
+
+<pre><code class="language-text">
+|--&gt;|    +-------------------
+| a | = \|  ax * ax + ay * ay
+|   |    V
+</code></pre>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -115,7 +114,7 @@
 
     <script>
         window.rootPath = "../../";
-        window.currentCrate = "game_of_live";
+        window.currentCrate = "game_of_life";
     </script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>

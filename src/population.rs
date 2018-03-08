@@ -1,8 +1,8 @@
+use std::fmt;
 use cell::Cell;
 use dimension::Dimension;
 use place::Place;
 use place::distance;
-use std::fmt;
 use status::Status;
 
 /// This struct describes a population of cells.

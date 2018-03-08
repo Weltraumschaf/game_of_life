@@ -2,6 +2,7 @@
 #[macro_use]
 extern crate hamcrest;
 extern crate clap;
+extern crate rand;
 
 mod cell;
 pub mod config;
@@ -11,15 +12,27 @@ pub mod population;
 pub mod screen;
 mod status;
 
+use rand::Rng;
 use place::Place;
 use cell::Cell;
+use config::Config;
+use population::Population;
 
-pub fn create_initial_cells() -> Vec<Cell> {
-    vec![
-        Cell::new(Place::new(13, 9)),
-        Cell::new(Place::new(12, 10)),
-        Cell::new(Place::new(13, 10)),
-        Cell::new(Place::new(14, 10)),
-        Cell::new(Place::new(13, 11))
-    ]
+/// Generate a random population of cells.
+pub fn create_initial_population(config: &Config) -> Population {
+    let mut cells: Vec<Cell> = Vec::new();
+    let mut rng = rand::thread_rng();
+
+    for y in 0..config.get_height() {
+        for x in 0..config.get_width() {
+            if rng.next_u32() % config.get_ratio() == 0 {
+                cells.push(Cell::new(Place::new(x, y)));
+            }
+        }
+    }
+
+    Population::new(
+        config.get_width(),
+        config.get_height(),
+        cells)
 }

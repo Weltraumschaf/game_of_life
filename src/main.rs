@@ -4,7 +4,7 @@ extern crate clap;
 use std::thread;
 use clap::{Arg, App};
 use game_of_life::config::create_config;
-use game_of_life::create_initial_cells;
+use game_of_life::create_initial_population;
 use game_of_life::population::Population;
 use game_of_life::screen::{clear, print_header};
 
@@ -21,7 +21,7 @@ fn main() {
         .arg(Arg::with_name("width")
             .long("width")
             .value_name("WIDTH")
-            .help("Sets width of the population space. Default is 20.")
+            .help("Sets width of the population space. Default is 40.")
             .takes_value(true))
         .arg(Arg::with_name("height")
             .long("height")
@@ -33,17 +33,20 @@ fn main() {
             .value_name("SLEEP")
             .help("Sets sleep time in seconds between the population iterations. Default is 1.")
             .takes_value(true))
+        .arg(Arg::with_name("ratio")
+            .long("ratio")
+            .value_name("RATIO")
+            .help("A probability ratio used for the initial cell generation. Default is 4.")
+            .takes_value(true))
         .get_matches();
     let config = create_config(&matches);
 
-    let mut population = Population::new(
-        config.get_width(),
-        config.get_height(),
-        create_initial_cells());
+    let mut population = create_initial_population(&config);
 
     loop {
         clear();
         print_header();
+        println!("{}", &config);
         println!("{}", population);
         population = population.next_generation();
         thread::sleep(config.get_sleep());

@@ -1,8 +1,8 @@
-extern crate game_of_live;
+extern crate game_of_life;
 
-use game_of_live::population::Population;
-use game_of_live::cell::Cell;
-use game_of_live::place::Place;
+use game_of_life::population::Population;
+use game_of_life::cell::Cell;
+use game_of_life::place::Place;
 
 /// The main entry point of the binary.
 ///

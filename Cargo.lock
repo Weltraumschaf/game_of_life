@@ -26,7 +26,7 @@ version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
-name = "game_of_live"
+name = "game_of_life"
 version = "1.0.0"
 dependencies = [
  "hamcrest 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",

@@ -1,5 +1,5 @@
 [package]
-name = "game_of_live"
+name = "game_of_life"
 version = "1.0.0"
 authors = ["Sven Strittmatter <sven.strittmatter@iteratec.de>"]
 repository = "https://github.com/Weltraumschaf/game_of_live"

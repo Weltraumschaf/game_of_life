@@ -6,7 +6,7 @@ use std::fmt;
 use status::Status;
 
 /// This struct describes a population of cells.
-#[derive(Debug, PartialEq, Clone)]
+#[derive(PartialEq, Clone)]
 pub struct Population {
     /// The status of this population.
     status: Status,
@@ -122,6 +122,35 @@ impl fmt::Display for Population {
     }
 }
 
+impl fmt::Debug for Population {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let mut buf = String::new();
+
+        for y in 0..self.size.get_height() {
+            buf.push_str(&format!("{}", y));
+
+            for x in 0..self.size.get_width() {
+                let current = Place::new(x, y);
+
+                match self.get_cell(&current) {
+                    Some(_) => buf.push('O'),
+                    None => buf.push(' '),
+                }
+            }
+
+            buf.push('\n');
+        }
+
+        buf.push(' ');
+
+        for x in 0..self.size.get_width() {
+            buf.push_str(&format!("{}", x));
+        }
+
+        write!(f, "{}", buf)
+    }
+}
+
 /// A cell should die if it has less than two or more than three neighbours.
 fn should_die(number_of_neighbours: usize) -> bool {
     match number_of_neighbours {
@@ -223,8 +252,18 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
-    fn generate_next_population_cell_with_three_neighbours_survive() {}
+    fn generate_next_population_cell_with_three_neighbours_survive() {
+        let cells: Vec<Cell> = vec![
+            Cell::new(Place::new(2, 2)),
+            Cell::new(Place::new(3, 2)),
+            Cell::new(Place::new(4, 2)),
+            Cell::new(Place::new(3, 3))
+        ];
+
+        let sut = Population::new(10, 5, cells);
+
+        println!("{:?}", sut);
+    }
 
     #[test]
     #[ignore]

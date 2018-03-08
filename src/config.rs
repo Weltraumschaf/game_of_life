@@ -1,4 +1,6 @@
 use clap::ArgMatches;
+use std::time;
+use std::time::Duration;
 
 /// Creates a new config from the arguments matcher.
 /// This function validates the values and throws an error if not met requirements.
@@ -38,7 +40,7 @@ impl Config {
     }
 
     /// Seconds to sleep between the population's iterations.
-    pub fn get_sleep(&self) -> u64 {
-        self.sleep
+    pub fn get_sleep(&self) -> Duration {
+        time::Duration::from_secs(self.sleep)
     }
 }

@@ -1,7 +1,7 @@
 extern crate game_of_life;
 extern crate clap;
 
-use std::{thread, time};
+use std::thread;
 use clap::{Arg, App};
 use game_of_life::cell::Cell;
 use game_of_life::config::create_config;
@@ -47,7 +47,7 @@ fn main() {
         print_header();
         println!("{}", population);
         population = population.next_generation();
-        wait(config.get_sleep());
+        thread::sleep(config.get_sleep());
     }
 }
 
@@ -60,9 +60,3 @@ fn create_initial_cells() -> Vec<Cell> {
         Cell::new(Place::new(13, 11))
     ]
 }
-
-fn wait(sleep: u64) {
-    let pause = time::Duration::from_secs(sleep);
-    thread::sleep(pause);
-}
-

@@ -77,7 +77,7 @@ impl fmt::Display for Status {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Iteration: {:5}, Cells: {:5}, Born:  {:5}, Died:   {:5}",
+            "Iteration: {:5}, Cells:  {:5}, Born:  {:5}, Died:   {:5}",
             self.iteration,
             self.cells,
             self.born,
@@ -119,6 +119,6 @@ mod tests {
 
         assert_that!(
             format!("{}", sut),
-            is(equal_to(String::from("Iteration:    42, Cells:    23, Born:      5, Died:       3"))));
+            is(equal_to(String::from("Iteration:    42, Cells:     23, Born:      5, Died:       3"))));
     }
 }

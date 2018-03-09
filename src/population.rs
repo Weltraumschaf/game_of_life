@@ -113,7 +113,7 @@ impl fmt::Display for Population {
                 let current = Place::new(x, y);
 
                 match self.get_cell(&current) {
-                    Some(_) => buf.push('O'),
+                    Some(_) => buf.push('☀'),
                     None => buf.push(' '),
                 }
             }
@@ -357,11 +357,11 @@ mod tests {
         ];
         let sut = Population::new(10, 5, cells);
         let expected = r#"+----------+
-|O        O|
-|O O    O O|
-|O  O  O  O|
-|O   OO   O|
-|O        O|
+|☀        ☀|
+|☀ ☀    ☀ ☀|
+|☀  ☀  ☀  ☀|
+|☀   ☀☀   ☀|
+|☀        ☀|
 +----------+
 "#;
 

@@ -67,13 +67,18 @@ impl Population {
         }
     }
 
-    fn kill_cell_if_necessary(&self, next: Status, survived: &mut Vec<Cell>, number_of_neighbours: usize, cell:Cell) -> Status {
+    fn kill_cell_if_necessary(&self, next: Status, survived: &mut Vec<Cell>, number_of_neighbours: usize, cell: Cell) -> Status {
+        if cell.is_dead() {
+            // Fade out dead cells.
+            return next;
+        }
+
         if should_die(number_of_neighbours) {
             survived.push(cell.kill());
-            next.inc_died()
+            return next.inc_died();
         } else {
             survived.push(cell);
-            next
+            return next;
         }
     }
 

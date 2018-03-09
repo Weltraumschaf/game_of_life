@@ -21,6 +21,8 @@ use config::Config;
 use population::Population;
 use screen::{clear, print_header};
 
+/// Runs the game of life.
+/// This function may run endless.
 pub fn run_game(config: Config) {
     let mut population = create_initial_population(&config);
     let mut previous_status = population.get_status();

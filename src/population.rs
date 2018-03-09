@@ -113,7 +113,7 @@ impl fmt::Display for Population {
                 let current = Place::new(x, y);
 
                 match self.get_cell(&current) {
-                    Some(_) => buf.push('☀'),
+                    Some(cell) => buf.push_str(&format!("{}", cell)),
                     None => buf.push(' '),
                 }
             }
@@ -143,7 +143,7 @@ impl fmt::Debug for Population {
                 let current = Place::new(x, y);
 
                 match self.get_cell(&current) {
-                    Some(_) => buf.push('O'),
+                    Some(cell) => buf.push_str(&format!("{}", cell)),
                     None => buf.push(' '),
                 }
             }

@@ -10,7 +10,7 @@ mod dimension;
 mod place;
 pub mod population;
 pub mod screen;
-mod status;
+pub mod status;
 
 use rand::Rng;
 use place::Place;

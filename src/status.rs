@@ -71,6 +71,12 @@ impl Status {
             died: self.get_died() + 1,
         }
     }
+
+    /// Determines if this population has changed to the other.
+    ///A population is considered changed if either born or died cell number is different.
+    pub fn is_population_unchanged(&self, other: Status) -> bool {
+        (self.get_died() == other.get_died() && self.get_born() == other.get_born())
+    }
 }
 
 impl fmt::Display for Status {
@@ -120,5 +126,30 @@ mod tests {
         assert_that!(
             format!("{}", sut),
             is(equal_to(String::from("Iteration:    42, Cells:     23, Born:      5, Died:       3"))));
+    }
+
+    #[test]
+    fn is_population_unchanged_died_and_born_equal() {
+        assert_that!(
+            Status::new(0, 0, 1, 2).is_population_unchanged(Status::new(0, 0, 1, 2)),
+            is(equal_to(true))
+        );
+    }
+
+    #[test]
+    fn is_population_unchanged_died_different() {
+        assert_that!(
+            Status::new(0, 0, 1, 2).is_population_unchanged(Status::new(0, 0, 1, 3)),
+            is(equal_to(false))
+        );
+    }
+
+    #[test]
+    fn is_population_unchanged_born_different() {
+        assert_that!(
+            Status::new(0, 0, 1, 2).is_population_unchanged(Status::new(0, 0, 3, 2)),
+            is(equal_to(false
+            ))
+        );
     }
 }

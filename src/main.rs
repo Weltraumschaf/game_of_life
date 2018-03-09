@@ -1,12 +1,9 @@
 extern crate game_of_life;
 extern crate clap;
 
-use std::thread;
 use clap::{Arg, App};
 use game_of_life::config::create_config;
-use game_of_life::create_initial_population;
-use game_of_life::screen::{clear, print_header};
-use game_of_life::status::Status;
+use game_of_life::run_game;
 
 /// The main entry point of the binary.
 ///
@@ -41,25 +38,6 @@ fn main() {
         .get_matches();
     let config = create_config(&matches);
 
-    let mut population = create_initial_population(&config);
-    let mut previous_status = population.get_status();
-
-    loop {
-        clear();
-        print_header();
-        println!("{}", &config);
-        println!("{}", population.get_status());
-        println!();
-        print!("{}", population);
-        population = population.next_generation();
-
-        if previous_status.is_population_unchanged(population.get_status()) {
-            println!("Population is stuck! No more evolution...");
-            break;
-        }
-
-        previous_status = population.get_status();
-        thread::sleep(config.get_sleep());
-    }
+    run_game(config);
 }
 

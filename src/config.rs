@@ -22,7 +22,7 @@ pub fn create_config(matches: &ArgMatches) -> Config {
     let ratio = ratio.parse::<u32>().expect("Not negative number expected as sleep!");
     // TODO Check for not less than 1
 
-    Config { width, height, sleep, ratio }
+    Config::new(width, height, sleep, ratio)
 }
 
 /// This struct holds the configuration for the game.
@@ -35,6 +35,10 @@ pub struct Config {
 }
 
 impl Config {
+    fn new(width: usize, height: usize, sleep: u64, ratio: u32) -> Config {
+        Config { width, height, sleep, ratio }
+    }
+
     /// Get the width of the space the population have.
     pub fn get_width(&self) -> usize {
         self.width
@@ -50,7 +54,7 @@ impl Config {
         time::Duration::from_secs(self.sleep)
     }
 
-    /// The probability ration for generating inital population.
+    /// The probability ration for generating initial population.
     pub fn get_ratio(&self) -> u32 {
         self.ratio
     }
@@ -58,6 +62,21 @@ impl Config {
 
 impl fmt::Display for Config {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Width: {}, Height: {}, Sleep: {}, Ration: {}", self.width, self.height, self.sleep, self.ratio)
+        write!(f, "Width:     {:5}, Height: {:5}, Sleep: {:5}, Ration: {:5}", self.width, self.height, self.sleep, self.ratio)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use hamcrest::prelude::*;
+
+    #[test]
+    fn fmt() {
+        let sut = Config::new(42, 23, 5, 3);
+
+        assert_that!(
+            format!("{}", sut),
+            is(equal_to(String::from("Width:        42, Height:    23, Sleep:     5, Ration:     3"))));
     }
 }

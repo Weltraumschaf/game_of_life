@@ -26,7 +26,7 @@ impl Population {
         }
     }
 
-    fn get_status(&self) -> Status {
+    pub fn get_status(&self) -> Status {
         self.status.clone()
     }
 
@@ -103,8 +103,6 @@ impl Population {
 impl fmt::Display for Population {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut buf = String::new();
-        buf.push_str(&format!("{}", self.get_status()));
-        buf.push('\n');
         buf.push_str(&generate_line_for_population(self.size.get_width()));
         buf.push('\n');
 
@@ -325,8 +323,7 @@ mod tests {
     #[test]
     fn format_display_empty_population() {
         let sut = Population::new(10, 5, Vec::new());
-        let expected = r#"Iteration: 0, Cells: 0, Born: 0, Died: 0
-+----------+
+        let expected = r#"+----------+
 |          |
 |          |
 |          |
@@ -359,8 +356,7 @@ mod tests {
             Cell::new(Place::new(9, 4))
         ];
         let sut = Population::new(10, 5, cells);
-        let expected = r#"Iteration: 0, Cells: 16, Born: 0, Died: 0
-+----------+
+        let expected = r#"+----------+
 |O        O|
 |O O    O O|
 |O  O  O  O|

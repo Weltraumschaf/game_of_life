@@ -46,6 +46,8 @@ fn main() {
         clear();
         print_header();
         println!("{}", &config);
+        println!("{}", population.get_status());
+        println!();
         print!("{}", population);
         population = population.next_generation();
         thread::sleep(config.get_sleep());

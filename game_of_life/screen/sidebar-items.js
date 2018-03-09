@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["clear","Clears the screen."],["print_header","Prints the game header."]]});

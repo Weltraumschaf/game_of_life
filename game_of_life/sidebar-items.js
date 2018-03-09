@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["run_game",""]],"mod":[["config",""]]});
+initSidebarItems({"fn":[["run_game","Runs the game of life. This function may run endless."]],"mod":[["config",""]]});

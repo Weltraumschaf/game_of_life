@@ -248,7 +248,7 @@
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="macro">write</span><span class="macro">!</span>(
             <span class="ident">f</span>,
-            <span class="string">&quot;Iteration: {}, Cells: {}, Born: {}, Died: {}&quot;</span>,
+            <span class="string">&quot;Iteration: {:5}, Cells:  {:5}, Born:  {:5}, Died:   {:5}&quot;</span>,
             <span class="self">self</span>.<span class="ident">iteration</span>,
             <span class="self">self</span>.<span class="ident">cells</span>,
             <span class="self">self</span>.<span class="ident">born</span>,
@@ -286,11 +286,11 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">fmt</span>() {
-        <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">Status</span>::<span class="ident">new</span>(<span class="number">42</span>, <span class="number">23</span>, <span class="number">5</span>, <span class="number">3</span>);
+        <span class="kw">let</span> <span class="ident">sut</span> <span class="op">=</span> <span class="ident">Status</span>::<span class="ident">new</span>(<span class="number">42</span>, <span class="number">23</span>, <span class="number">5</span>, <span class="number">3</span>);
 
         <span class="macro">assert_that</span><span class="macro">!</span>(
-            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">status</span>),
-            <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;Iteration: 42, Cells: 23, Born: 5, Died: 3&quot;</span>))));
+            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">sut</span>),
+            <span class="ident">is</span>(<span class="ident">equal_to</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;Iteration:    42, Cells:     23, Born:      5, Died:       3&quot;</span>))));
     }
 }</pre>
 </section>

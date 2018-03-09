@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["cell",""],["config",""],["place",""],["population",""],["screen",""]]});
+initSidebarItems({"fn":[["create_initial_population","Generate a random population of cells."]],"mod":[["config",""],["population",""],["screen",""]]});

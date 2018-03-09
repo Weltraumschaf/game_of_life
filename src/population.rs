@@ -62,16 +62,18 @@ impl Population {
         let number_of_neighbours = count_neighbours(&self.cells, &current_place);
 
         match self.get_cell(&current_place) {
-            Some(cell) => {
-                if should_die(number_of_neighbours) {
-                    survived.push(cell.kill());
-                    return next.inc_died();
-                } else {
-                    survived.push(cell);
-                }
-                next
-            },
+            Some(cell) => self.kill_cell_if_necessary(next, survived, number_of_neighbours, cell),
             None => self.spawn_cell_if_possible(current_place, next, survived, number_of_neighbours),
+        }
+    }
+
+    fn kill_cell_if_necessary(&self, next: Status, survived: &mut Vec<Cell>, number_of_neighbours: usize, cell:Cell) -> Status {
+        if should_die(number_of_neighbours) {
+            survived.push(cell.kill());
+            next.inc_died()
+        } else {
+            survived.push(cell);
+            next
         }
     }
 

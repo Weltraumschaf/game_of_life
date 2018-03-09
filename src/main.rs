@@ -5,7 +5,6 @@ use std::thread;
 use clap::{Arg, App};
 use game_of_life::config::create_config;
 use game_of_life::create_initial_population;
-use game_of_life::population::Population;
 use game_of_life::screen::{clear, print_header};
 
 /// The main entry point of the binary.
@@ -47,7 +46,7 @@ fn main() {
         clear();
         print_header();
         println!("{}", &config);
-        println!("{}", population);
+        print!("{}", population);
         population = population.next_generation();
         thread::sleep(config.get_sleep());
     }

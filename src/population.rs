@@ -34,6 +34,7 @@ impl Population {
         self.cells.clone()
     }
 
+    /// Generates the next evolution iteration of this population.
     pub fn next_generation(&self) -> Population {
         let (next, survived) = self.visit_all_places();
 
@@ -104,8 +105,12 @@ impl fmt::Display for Population {
         let mut buf = String::new();
         buf.push_str(&format!("{}", self.get_status()));
         buf.push('\n');
+        buf.push_str(&generate_line_for_population(self.size.get_width()));
+        buf.push('\n');
 
         for y in 0..self.size.get_height() {
+            buf.push('|');
+
             for x in 0..self.size.get_width() {
                 let current = Place::new(x, y);
 
@@ -115,11 +120,18 @@ impl fmt::Display for Population {
                 }
             }
 
+            buf.push('|');
             buf.push('\n');
         }
 
+        buf.push_str(&generate_line_for_population(self.size.get_width()));
+        buf.push('\n');
         write!(f, "{}", buf)
     }
+}
+
+fn generate_line_for_population(width: usize) -> String {
+    format!("+{}+", "-".repeat(width))
 }
 
 impl fmt::Debug for Population {
@@ -184,6 +196,16 @@ fn count_neighbours(cells: &Vec<Cell>, position: &Place) -> usize {
 mod tests {
     use super::*;
     use hamcrest::prelude::*;
+
+    #[test]
+    fn generate_line_for_population_zero_width() {
+        assert_that!(generate_line_for_population(0), is(equal_to(String::from("++"))));
+    }
+
+    #[test]
+    fn generate_line_for_population_some_width() {
+        assert_that!(generate_line_for_population(5), is(equal_to(String::from("+-----+"))));
+    }
 
     #[test]
     fn new_population_has_initial_status() {
@@ -301,15 +323,23 @@ mod tests {
     fn generate_next_population_new_cell_will_be_born_on_three_neighbours_at_empty_place() {}
 
     #[test]
-    fn format_empty_population() {
+    fn format_display_empty_population() {
         let sut = Population::new(10, 5, Vec::new());
-        let expected = "Iteration: 0, Cells: 0, Born: 0, Died: 0\n          \n          \n          \n          \n          \n";
+        let expected = r#"Iteration: 0, Cells: 0, Born: 0, Died: 0
++----------+
+|          |
+|          |
+|          |
+|          |
+|          |
++----------+
+"#;
 
         assert_that!(format!("{}", sut), is(equal_to(String::from(expected))));
     }
 
     #[test]
-    fn format_some_population() {
+    fn format_display_some_population() {
         let cells: Vec<Cell> = vec![
             Cell::new(Place::new(0, 0)),
             Cell::new(Place::new(9, 0)),
@@ -330,11 +360,13 @@ mod tests {
         ];
         let sut = Population::new(10, 5, cells);
         let expected = r#"Iteration: 0, Cells: 16, Born: 0, Died: 0
-O        O
-O O    O O
-O  O  O  O
-O   OO   O
-O        O
++----------+
+|O        O|
+|O O    O O|
+|O  O  O  O|
+|O   OO   O|
+|O        O|
++----------+
 "#;
 
         assert_that!(format!("{}", sut), is(equal_to(String::from(expected))));

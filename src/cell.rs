@@ -19,8 +19,16 @@ impl Cell {
         &self.position
     }
 
-    fn kill(&self) -> Cell {
+    /// Creates a copy of this cell with flag dead.
+    /// This method does not mutate this cell.
+    pub fn kill(&self) -> Cell {
         Cell { position: self.position.clone(), is_dead: true }
+    }
+
+    /// Whether this cell is dead or alive.
+    /// Dead ones count not as neighbours.
+    pub fn is_dead(&self) -> bool {
+        self.is_dead
     }
 }
 

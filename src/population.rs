@@ -69,13 +69,16 @@ impl Population {
                 } else {
                     survived.push(cell);
                 }
+                next
             },
-            None => {
-                if should_spawn(number_of_neighbours) {
-                    survived.push(Cell::new(current_place));
-                    return next.inc_born();
-                }
-            },
+            None => self.spawn_cell_if_possible(current_place, next, survived, number_of_neighbours),
+        }
+    }
+
+    fn spawn_cell_if_possible(&self, current_place: Place, next: Status, survived: &mut Vec<Cell>, number_of_neighbours: usize) -> Status {
+        if should_spawn(number_of_neighbours) {
+            survived.push(Cell::new(current_place));
+            return next.inc_born();
         }
 
         next

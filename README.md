@@ -1,14 +1,14 @@
 # Game of Life
 
-[![Build Status](https://travis-ci.org/Weltraumschaf/game_of_life.svg?branch=master)](https://travis-ci.org/Weltraumschaf/game_of_life)
+[![Build Status][travis-badge]][travis-project] [![codecov][codecov-badge]][codecov-project]
 
-Little project which implements [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
+Little project which implements [Conway's Game of Life][wiki-gol].
 
-The API doc of the whole crate is [here](https://weltraumschaf.github.io/game_of_life/game_of_life/index.html).
+The API doc of the whole crate is [here][crate-doc].
 
 ## Build and Run
 
-To buid the game you need [Rust](http://rust-lang.org/) and [Cargo](https://doc.rust-lang.org/cargo/) instaled. Then type:
+To buid the game you need [Rust][rust-lang] and [Cargo][cargo-tool] installed. Then type:
 
 ```bash
 cargo clean
@@ -88,3 +88,12 @@ A new cell is born at an **empty place**, if this place has **exactly 3 neighbou
 C   -> CC
  CC     CC
 ```
+
+[travis-project]:   https://travis-ci.org/Weltraumschaf/game_of_life
+[travis-badge]:     https://travis-ci.org/Weltraumschaf/game_of_life.svg?branch=master
+[codecov-project]:  https://codecov.io/gh/Weltraumschaf/game_of_life
+[codecov-badge]:    https://codecov.io/gh/Weltraumschaf/game_of_life/branch/master/graph/badge.svg
+[wiki-gol]:         https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+[crate-doc]:        https://weltraumschaf.github.io/game_of_life/game_of_life/index.html
+[rust-lang]:        http://rust-lang.org/
+[cargo-tool]:       https://doc.rust-lang.org/cargo/

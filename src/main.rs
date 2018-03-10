@@ -3,7 +3,7 @@ extern crate clap;
 
 use std::process;
 use clap::{Arg, App};
-use game_of_life::config::create_config;
+use game_of_life::config::*;
 use game_of_life::*;
 
 /// The main entry point of the binary.
@@ -19,22 +19,34 @@ fn main() {
         .arg(Arg::with_name("width")
             .long("width")
             .value_name("WIDTH")
-            .help("Sets width of the population space. Default is 40.")
+            .help(
+                &format!(
+                    "Sets width of the population space. Default is {}.",
+                    config::DEFAULT_WIDTH))
             .takes_value(true))
         .arg(Arg::with_name("height")
             .long("height")
             .value_name("HEIGHT")
-            .help("Sets height of the population space. Default is 20.")
+            .help(
+                &format!(
+                    "Sets height of the population space. Default is {}.",
+                    config::DEFAULT_HEIGHT))
             .takes_value(true))
         .arg(Arg::with_name("sleep")
             .long("sleep")
             .value_name("SLEEP")
-            .help("Sets sleep time in seconds between the population iterations. Default is 1.")
+            .help(
+                &format!(
+                    "Sets sleep time in seconds between the population iterations. Default is {}.",
+                    config::DEFAULT_SLEEP))
             .takes_value(true))
         .arg(Arg::with_name("ratio")
             .long("ratio")
             .value_name("RATIO")
-            .help("A probability ratio used for the initial cell generation. Default is 4.")
+            .help(
+                &format!(
+                    "A probability ratio used for the initial cell generation. Default is {}.",
+                    config::DEFAULT_RATIO))
             .takes_value(true))
         .get_matches();
 

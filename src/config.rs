@@ -3,13 +3,22 @@ use std::fmt;
 use std::time;
 use std::time::Duration;
 
+/// Default width of the game used if the CLI option is not given.
+pub static DEFAULT_WIDTH: &'static str = "40";
+/// Default height of the game used if the CLI option is not given.
+pub static DEFAULT_HEIGHT: &'static str = "20";
+/// Default sleep of the game used if the CLI option is not given.
+pub static DEFAULT_SLEEP: &'static str = "1";
+/// Default ratio of the game used if the CLI option is not given.
+pub static DEFAULT_RATIO: &'static str = "4";
+
 /// Creates a new config from the arguments matcher.
 /// This function validates the values and throws an error if not met requirements.
 pub fn create_config(matches: &ArgMatches) -> Result<Config, &'static str>  {
-    let width = matches.value_of("width").unwrap_or("40");
-    let height = matches.value_of("height").unwrap_or("20");
-    let sleep = matches.value_of("sleep").unwrap_or("1");
-    let ratio = matches.value_of("ratio").unwrap_or("4");
+    let width = matches.value_of("width").unwrap_or(DEFAULT_WIDTH);
+    let height = matches.value_of("height").unwrap_or(DEFAULT_HEIGHT);
+    let sleep = matches.value_of("sleep").unwrap_or(DEFAULT_SLEEP);
+    let ratio = matches.value_of("ratio").unwrap_or(DEFAULT_RATIO);
 
     validate_config(width, height, sleep, ratio)
 }

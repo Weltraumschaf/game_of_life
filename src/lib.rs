@@ -21,6 +21,15 @@ use config::Config;
 use population::Population;
 use screen::{clear, print_header};
 
+/// Author of the application.
+pub static APPLICATION_AUTHOR: &'static str = "Sven Strittmatter <ich@weltraumschaf.de>";
+/// Description of the application.
+pub static APPLICATION_DESCRIPTION: &'static str = "This is a Game of Life implementation.";
+/// Name of the application
+pub static APPLICATION_NAME: &'static str = "game_of_life";
+/// Version of the application.
+pub static APPLICATION_VERSION: &'static str = "1.0.0";
+
 /// Runs the game of life.
 /// This function may run endless.
 pub fn run_game(config: Config) {

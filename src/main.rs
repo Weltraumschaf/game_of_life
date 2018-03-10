@@ -11,10 +11,10 @@ use game_of_life::run_game;
 /// is in the library part of the crate (and so can be used as a dependency). The main module only
 /// provides the main function with simple code which delegates to the library part.
 fn main() {
-    let matches = App::new("Game of Life")
-        .version("1.0.0")
-        .author("Sven Strittmatter <ich@weltraumschaf.de>")
-        .about("This is a Game of Life implementation.")
+    let matches = App::new(game_of_life::APPLICATION_NAME)
+        .version(game_of_life::APPLICATION_VERSION)
+        .author(game_of_life::APPLICATION_AUTHOR)
+        .about(game_of_life::APPLICATION_DESCRIPTION)
         .arg(Arg::with_name("width")
             .long("width")
             .value_name("WIDTH")

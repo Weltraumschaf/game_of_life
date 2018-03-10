@@ -1,9 +1,10 @@
 extern crate game_of_life;
 extern crate clap;
 
+use std::process;
 use clap::{Arg, App};
 use game_of_life::config::create_config;
-use game_of_life::run_game;
+use game_of_life::*;
 
 /// The main entry point of the binary.
 ///
@@ -36,7 +37,11 @@ fn main() {
             .help("A probability ratio used for the initial cell generation. Default is 4.")
             .takes_value(true))
         .get_matches();
-    let config = create_config(&matches);
+
+    let config = create_config(&matches).unwrap_or_else(|err| {
+        println!("{}", err);
+        process::exit(1);
+    });
 
     run_game(config);
 }

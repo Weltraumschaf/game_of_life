@@ -133,7 +133,7 @@ mod tests {
 
         assert_that!(
             format!("{}", sut),
-            is(equal_to(String::from("Width:        42, Height:    23, Sleep:     5, Ration:     3"))));
+            is(equal_to(String::from("Width:        42, Height:    23, Sleep:     5, Ratio:     3"))));
     }
 
     #[test]

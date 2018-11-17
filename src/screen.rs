@@ -1,6 +1,6 @@
 /// Prints the game header.
 pub fn print_header() {
-    println!("Game of Live");
+    println!("Game of Life");
     println!("============");
     println!();
 }

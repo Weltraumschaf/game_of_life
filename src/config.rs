@@ -118,7 +118,7 @@ impl Config {
 
 impl fmt::Display for Config {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Width:     {:5}, Height: {:5}, Sleep: {:5}, Ration: {:5}", self.width, self.height, self.sleep, self.ratio)
+        write!(f, "Width:     {:5}, Height: {:5}, Sleep: {:5}, Ratio: {:5}", self.width, self.height, self.sleep, self.ratio)
     }
 }
 

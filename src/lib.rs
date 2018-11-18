@@ -54,6 +54,7 @@ pub fn run_game(config: Config) {
         thread::sleep(config.get_sleep());
     }
 }
+
 /// Generate a random population of cells.
 fn create_initial_population(config: &Config) -> Population {
     let mut cells: Vec<Cell> = Vec::new();

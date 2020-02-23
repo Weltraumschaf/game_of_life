@@ -75,7 +75,7 @@ impl Status {
     /// Determines if this population has changed to the other.
     ///A population is considered changed if either born or died cell number is different.
     pub fn is_population_unchanged(&self, other: Status) -> bool {
-        (self.get_died() == other.get_died() && self.get_born() == other.get_born())
+        self.get_died() == other.get_died() && self.get_born() == other.get_born()
     }
 }
 

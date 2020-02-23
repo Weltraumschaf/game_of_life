@@ -1,9 +1,8 @@
 use std::fmt;
-use cell::Cell;
-use dimension::Dimension;
-use place::Place;
-use place::distance;
-use status::Status;
+use crate::status::Status;
+use crate::dimension::Dimension;
+use crate::cell::Cell;
+use crate::place::{Place, distance};
 
 /// This struct describes a population of cells.
 #[derive(PartialEq, Clone)]
@@ -73,12 +72,12 @@ impl Population {
             return next;
         }
 
-        if should_die(number_of_neighbours) {
+        return if should_die(number_of_neighbours) {
             survived.push(cell.kill());
-            return next.inc_died();
+            next.inc_died()
         } else {
             survived.push(cell);
-            return next;
+            next
         }
     }
 

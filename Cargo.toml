@@ -5,6 +5,7 @@ authors = ["Sven Strittmatter <sven.strittmatter@iteratec.de>"]
 repository = "https://github.com/Weltraumschaf/game_of_live"
 readme = "README.md"
 license = "http://weltraumschaf.de/the-beer-ware-license.txt"
+edition = "2018"
 
 [badges]
 travis-ci = { repository = "Weltraumschaf/game_of_live", branch = "master" }

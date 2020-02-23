@@ -1,5 +1,5 @@
 use std::fmt;
-use place::Place;
+use crate::place::Place;
 
 /// This struct represents a living cell.
 #[derive(Debug, PartialEq, Clone)]
